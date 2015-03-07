@@ -25,8 +25,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+
 //import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.UserEntity;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
 
 /**
  * This class contains REST services, also contains action function for web
@@ -242,11 +249,12 @@ public class UserController {
 	@POST
 	@Path("/RequestAlreadySent")
 	@Produces("text/html")
-	public Response sendRequestResult(@FormParam("email") String email) {
+	public Response sendRequestResult(@FormParam("email") String email) throws ParseException {
 		String serviceUrl = "http://localhost:8888/rest/RequestAlreadySent";
 		try {
 			URL url = new URL(serviceUrl);
 			String urlParameters = "email=" + email;
+			
 			HttpURLConnection connection = (HttpURLConnection) url
 					.openConnection();
 			connection.setDoOutput(true);
@@ -264,7 +272,27 @@ public class UserController {
 			
 			writer.write(urlParameters);
 			writer.flush();
+			/////////////////////////////////////////////////////////////////////
+			//////////////////////////////This Part for testinf//////////////////
+			/*DatastoreService datastore = DatastoreServiceFactory
+					.getDatastoreService();
+			Query gaeQuery = new Query("requests");
+			PreparedQuery pq = datastore.prepare(gaeQuery);
+			//List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
+
+			Entity addFriendRequest = new Entity("requests",  1);
+
 			
+			
+			addFriendRequest.setProperty("from", "Karim@gmail");
+			addFriendRequest.setProperty("to","Esraa@gmail");
+			addFriendRequest.setProperty("Acceptance", "false");
+			datastore.put(addFriendRequest);*/
+			
+			
+			/////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////////////////
+
 			
 //			String line, retJson = "";
 //			BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -280,7 +308,8 @@ public class UserController {
 //			JSONObject object = (JSONObject) obj;
 //			
 //			if (object.get("Status").equals("Failed"))
-//				return null;
+//				return Response.ok(new Viewable("/jsp/unableToSendReq", "")).build();
+//			
 			
 			
 			return Response.ok(new Viewable("/jsp/RequestAlreadySent", "")).build();

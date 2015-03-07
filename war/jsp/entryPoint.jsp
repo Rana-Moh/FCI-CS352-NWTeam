@@ -8,7 +8,7 @@
 <body>
 <a href="/social/signup/">Sign up</a> <br>
 <a href="/social/login/">Login</a> <br>
-<a href="/social/SendFriendRequest/">SendFrienRequest</a> <br>
+
 
 </body>
 </html>

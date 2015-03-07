@@ -111,16 +111,17 @@ public class Service {
 		
 		UserEntity user = UserEntity.getFriendByEmail(email);
 		if (user == null) {
-			return "this firend does not exist in database";
+			return "failed";
 			
 
 		} else {
 			
+			user.addFriendRequestIDsFromAndTo();
 			//here when "from" friend exists add emails of both in request table 
-			object.put("Status", "OK");
-			object.put("name", user.getName());
-			object.put("email", user.getEmail());
-			object.put("password", user.getPass());
+//			object.put("Status", "OK");
+//			object.put("name", user.getName());
+//			object.put("email", user.getEmail());
+//			object.put("password", user.getPass());
 		}
 
 		return object.toString();

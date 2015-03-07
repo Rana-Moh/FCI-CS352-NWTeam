@@ -193,8 +193,8 @@ public class UserEntity {
 
 		
 		
-		addFriendRequest.setProperty("from", this.email);
-		addFriendRequest.setProperty("to",currentUser.getEmail());
+		addFriendRequest.setProperty("from", "Karim@gmail");
+		addFriendRequest.setProperty("to","Esraa@gmail");
 		addFriendRequest.setProperty("Acceptance", "false");
 		datastore.put(addFriendRequest);
 

@@ -7,14 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
-	<form action="/social/RequestAlreadySent" method="post">
-  Enter Friend Email : <input type="text" name="uname" /> <br>
-  
-  <input type="submit" value="SendFreiendRequest">
-  
-  </form>
-	
+Request is not sent
+<br>
+this email doesnot exist
 </body>
 </html>
