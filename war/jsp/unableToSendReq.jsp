@@ -9,6 +9,6 @@
 <body>
 Request is not sent
 <br>
-this email doesnot exist
+this email does not exist
 </body>
 </html>

@@ -26,6 +26,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
+
+import com.FCI.SWE.Models.User;
 //import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.UserEntity;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -180,6 +182,8 @@ public class UserController {
 		try {
 			URL url = new URL(serviceUrl);
 			String urlParameters = "uname=" + uname + "&password=" + pass;
+			
+			
 			HttpURLConnection connection = (HttpURLConnection) url
 					.openConnection();
 			connection.setDoOutput(true);
@@ -191,6 +195,9 @@ public class UserController {
 			
 			connection.setRequestProperty("Content-Type",
 					"application/x-www-form-urlencoded;charset=UTF-8");
+			
+			
+			
 			OutputStreamWriter writer = new OutputStreamWriter(
 					connection.getOutputStream());
 			writer.write(urlParameters);
@@ -204,19 +211,22 @@ public class UserController {
 			}
 			writer.close();
 			reader.close();
+			
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(retJson);
+			
 			JSONObject object = (JSONObject) obj;
+			
 			if (object.get("Status").equals("Failed"))
 				return null;
 			
 			Map<String, String> map = new HashMap<String, String>();
-			UserEntity user = UserEntity.getUser(object.toJSONString());
 			
+			User user = User.getUser(object.toJSONString());
 			
 			map.put("name", user.getName());
 			map.put("email", user.getEmail());
-			return Response.ok(new Viewable("/jsp/home", map)).build();
+			return Response.ok(new Viewable("/jsp/home",map)).build();
 			
 			
 			
@@ -239,21 +249,38 @@ public class UserController {
 
 	}
 
-	@GET
+	@POST
 	@Path("/SendFriendRequest")
 	public Response sendFriendRequest() {
 		return Response.ok(new Viewable("/jsp/SendFriendRequest")).build();
 	}
 	
+	@GET
+	@Path("/logout")
+	public Response logout() {
+		User u = User.getCurrentActiveUser();
+		u.setCurrentActiveUserToNull();
+		return Response.ok(new Viewable("/jsp/entryPoint")).build();
+	}
+	
 	//*********************************************************************
 	@POST
-	@Path("/RequestAlreadySent")
+	@Path("RequestAlreadySent")
 	@Produces("text/html")
-	public Response sendRequestResult(@FormParam("email") String email) throws ParseException {
+	public Response sendRequestResult(@FormParam("friendEmail") String friendEmail) throws ParseException {
+		
 		String serviceUrl = "http://localhost:8888/rest/RequestAlreadySent";
+		
+		User currentUserAtClientSide = User.getCurrentActiveUser();
+		String senderEmail = currentUserAtClientSide.getEmail();
+		
 		try {
+			
 			URL url = new URL(serviceUrl);
-			String urlParameters = "email=" + email;
+			String urlParameters = "friendEmail=" + friendEmail + "&senderEmail="+senderEmail;
+			
+			
+			
 			
 			HttpURLConnection connection = (HttpURLConnection) url
 					.openConnection();
@@ -268,50 +295,30 @@ public class UserController {
 					"application/x-www-form-urlencoded;charset=UTF-8");
 			OutputStreamWriter writer = new OutputStreamWriter(
 					connection.getOutputStream());
-			
-			
 			writer.write(urlParameters);
 			writer.flush();
-			/////////////////////////////////////////////////////////////////////
-			//////////////////////////////This Part for testinf//////////////////
-			/*DatastoreService datastore = DatastoreServiceFactory
-					.getDatastoreService();
-			Query gaeQuery = new Query("requests");
-			PreparedQuery pq = datastore.prepare(gaeQuery);
-			//List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
+			
+			
+			String line, retJson = "";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
 
-			Entity addFriendRequest = new Entity("requests",  1);
-
+			while ((line = reader.readLine()) != null) {
+				retJson += line;
+			}
 			
+			writer.close();
+			reader.close();
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(retJson);
+			JSONObject object = (JSONObject) obj;
 			
-			addFriendRequest.setProperty("from", "Karim@gmail");
-			addFriendRequest.setProperty("to","Esraa@gmail");
-			addFriendRequest.setProperty("Acceptance", "false");
-			datastore.put(addFriendRequest);*/
-			
-			
-			/////////////////////////////////////////////////////////////////////
-			/////////////////////////////////////////////////////////////////////
-
-			
-//			String line, retJson = "";
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(
-//					connection.getInputStream()));
-//
-//			while ((line = reader.readLine()) != null) {
-//				retJson += line;
-//			}
-//			writer.close();
-//			reader.close();
-//			JSONParser parser = new JSONParser();
-//			Object obj = parser.parse(retJson);
-//			JSONObject object = (JSONObject) obj;
-//			
-//			if (object.get("Status").equals("Failed"))
-//				return Response.ok(new Viewable("/jsp/unableToSendReq", "")).build();
-//			
-			
-			
+		
+			if (object.get("response").equals("request is not sent"))
+				return Response.ok(new Viewable("/jsp/unableToSendReq", "")).build();
+			else if(object.get("response").equals("request was sent before"))
+				return Response.ok(new Viewable("/jsp/sentBefore", "")).build();
+				
 			return Response.ok(new Viewable("/jsp/RequestAlreadySent", "")).build();
 			
 			
@@ -328,8 +335,6 @@ public class UserController {
 		 * UserEntity user = new UserEntity(uname, email, pass);
 		 * user.saveUser(); return uname;
 		 */
-		return null;
-		
-		
+		return null;		
 	}
 }

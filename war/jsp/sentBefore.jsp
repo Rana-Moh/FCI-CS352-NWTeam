@@ -7,16 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
-	<form action="/social/RequestAlreadySent" method="post">
-  Enter Friend Email : <input type="text" name="friendEmail" /> <br>
-  
-  <input type="submit" value="SendFreiendRequest">
-  
-  </form>
-  <br>
-  
-	<a href="/social/logout/">Log out</a> <br>
+request was sent before
 </body>
 </html>

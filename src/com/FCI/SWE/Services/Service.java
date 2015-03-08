@@ -24,6 +24,7 @@ import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.mortbay.util.ajax.JSON;
 
 import com.FCI.SWE.Models.UserEntity;
 
@@ -39,16 +40,15 @@ import com.FCI.SWE.Models.UserEntity;
 @Path("/")
 @Produces("text/html")
 public class Service {
-	
-	
-	/*@GET
-	@Path("/index")
-	public Response index() {
-		return Response.ok(new Viewable("/jsp/entryPoint")).build();
-	}*/
 
+	/*
+	 * @GET
+	 * 
+	 * @Path("/index") public Response index() { return Response.ok(new
+	 * Viewable("/jsp/entryPoint")).build(); }
+	 */
 
-		/**
+	/**
 	 * Registration Rest service, this service will be called to make
 	 * registration. This function will store user data in data store
 	 * 
@@ -74,8 +74,11 @@ public class Service {
 	/**
 	 * Login Rest Service, this service will be called to make login process
 	 * also will check user data and returns new user from datastore
-	 * @param uname provided user name
-	 * @param pass provided user password
+	 * 
+	 * @param uname
+	 *            provided user name
+	 * @param pass
+	 *            provided user password
 	 * @return user in json format
 	 */
 	@POST
@@ -89,6 +92,7 @@ public class Service {
 
 		} else {
 			object.put("Status", "OK");
+			object.put("id", user.getId());
 			object.put("name", user.getName());
 			object.put("email", user.getEmail());
 			object.put("password", user.getPass());
@@ -97,45 +101,33 @@ public class Service {
 		return object.toString();
 
 	}
-		
-	
-	
-	
-	
-	///ESraa Implemenation
+
+	// /ESraa Implemenation
 	@POST
 	@Path("/RequestAlreadySent")
-	public String RequestAlreadySent(@FormParam("email") String email) {
-		
-		JSONObject object = new JSONObject();
-		
-		UserEntity user = UserEntity.getFriendByEmail(email);
-		if (user == null) {
-			return "failed";
-			
+	public String RequestAlreadySent(@FormParam("friendEmail") String email,@FormParam("senderEmail") String senderEmail) {
 
-		} else {
-			
-			user.addFriendRequestIDsFromAndTo();
-			//here when "from" friend exists add emails of both in request table 
-//			object.put("Status", "OK");
-//			object.put("name", user.getName());
-//			object.put("email", user.getEmail());
-//			object.put("password", user.getPass());
+		// UserEntity user = getFriendByEmail(email);
+
+		//UserEntity user = UserEntity.getFriendByEmail(email);
+		JSONObject jsonObj = new JSONObject();
+		boolean friendIsFound = UserEntity.getFriendByEmail(email);
+		
+		
+		
+		if (friendIsFound) {
+			boolean flag2 = UserEntity.addFriendRequestIDsFromAndTo(email,
+					senderEmail);
+			if (flag2)
+				jsonObj.put("response", "request is sent");
+			else{
+				jsonObj.put("response", "request was sent before");
+			}
+		}else{
+			jsonObj.put("response", "request is not sent");
 		}
-
-		return object.toString();
-
+		
+		return jsonObj.toJSONString();
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
