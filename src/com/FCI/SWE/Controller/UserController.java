@@ -145,6 +145,8 @@ public class UserController {
 			JSONObject object = (JSONObject) obj;
 			if (object.get("Status").equals("OK"))
 				return "Registered Successfully";
+		//	else
+			//	return "this email already Exist";
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
