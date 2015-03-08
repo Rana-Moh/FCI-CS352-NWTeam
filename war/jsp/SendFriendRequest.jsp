@@ -12,7 +12,7 @@
 	<form action="/social/RequestAlreadySent" method="post">
   Enter Friend Email : <input type="text" name="friendEmail" /> <br>
   
-  <input type="submit" value="SendFreiendRequest">
+  <input type="submit" value="SendFriendRequest">
   
   </form>
   <br>

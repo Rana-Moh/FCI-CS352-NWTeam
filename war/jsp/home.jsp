@@ -8,6 +8,7 @@
 <body>
 <p> Welcome b2a ya ${it.name} </p>
 <a href="/social/SendFriendRequest/">SendFrienRequest</a> <br>
+<a href="/social/AddFriend/">Accept Friend Request</a> <br>
 <a href="/social/logout/">Log out</a> <br>
 <p> This is should be user home page </p>
 <p> Current implemented services "http://fci-swe-apps.appspot.com/rest/RegistrationService --- {requires: uname, email, password}" </p>

@@ -175,7 +175,7 @@ public class UserEntity {
 		Query gaeQuery = new Query("users");
 		PreparedQuery pq = datastore.prepare(gaeQuery);
 		for (Entity entity : pq.asIterable()) {
-			
+			System.out.println(entity.getProperty("name").toString());
 			if (entity.getProperty("name").toString().equals(name)
 					&& entity.getProperty("password").toString().equals(pass)) {
 
@@ -222,12 +222,38 @@ public class UserEntity {
 			//System.out.println(entity.getProperty("name").toString());
 			if (entity.getProperty("from").toString().equals(senderEmail)
 					&& entity.getProperty("to").toString().equals(friendEmail) 
-					&& entity.getProperty("Acceptance").toString().equals("0") ) {
+					&& entity.getProperty("Acceptance").toString().equals("0") ) 
+			{
+				//entity.setProperty("Acceptance", "1");
 
 				return false;
 			}
 		}
 		return true;
+	}
+	
+	
+	public static boolean checkAcceptTable(String myEmail, String femail) {
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query gaeQuery = new Query("requests");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) {
+			
+			
+			//System.out.println(entity.getProperty("name").toString());
+			if (entity.getProperty("from").toString().equals(femail)
+					&& entity.getProperty("to").toString().equals(myEmail) 
+					&& entity.getProperty("Acceptance").toString().equals("0") ) 
+			{
+				
+				entity.setProperty("Acceptance","1");
+				datastore.put(entity);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public static Boolean addFriendRequestIDsFromAndTo(String friendEmail,
@@ -242,7 +268,7 @@ public class UserEntity {
 			List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
 			
 			Entity addFriendRequest = new Entity("requests", list.size() + 1);
-			addFriendRequest.setProperty("from", senderEmail);
+			addFriendRequest.setProperty("from",senderEmail);
 			addFriendRequest.setProperty("to", friendEmail);
 			addFriendRequest.setProperty("Acceptance", "0");
 			

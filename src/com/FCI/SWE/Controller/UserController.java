@@ -249,10 +249,17 @@ public class UserController {
 
 	}
 
-	@POST
+	@GET
 	@Path("/SendFriendRequest")
 	public Response sendFriendRequest() {
 		return Response.ok(new Viewable("/jsp/SendFriendRequest")).build();
+	}
+	
+	@GET
+	@Path("/AddFriend")
+	public Response acceptRequest() 
+	{
+		return Response.ok(new Viewable("/jsp/addFriend")).build();
 	}
 	
 	@GET
@@ -313,7 +320,8 @@ public class UserController {
 			Object obj = parser.parse(retJson);
 			JSONObject object = (JSONObject) obj;
 			
-		
+			
+			
 			if (object.get("response").equals("request is not sent"))
 				return Response.ok(new Viewable("/jsp/unableToSendReq", "")).build();
 			else if(object.get("response").equals("request was sent before"))
@@ -325,6 +333,82 @@ public class UserController {
 			
 			
 		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*
+		 * UserEntity user = new UserEntity(uname, email, pass);
+		 * user.saveUser(); return uname;
+		 */
+		return null;		
+	}
+	@POST
+	@Path("AcceptAlreadySent")
+	@Produces("text/html")
+
+	public Response AcceptRequestResult(@FormParam("friendEmail") String friendEmail) throws ParseException {
+		
+		String serviceUrl = "http://localhost:8888/rest/accept";
+		
+		User currentUserAtClientSide = User.getCurrentActiveUser();
+		String currentEmail = currentUserAtClientSide.getEmail();
+		
+		try {
+			
+			URL url = new URL(serviceUrl);
+			String urlParameters = "friendEmail=" + friendEmail + "&MyEmail="+currentEmail;
+			
+			
+			
+			
+			HttpURLConnection connection = (HttpURLConnection) url
+					.openConnection();
+			connection.setDoOutput(true);
+			connection.setDoInput(true);
+			connection.setInstanceFollowRedirects(false);
+			connection.setRequestMethod("POST");
+			connection.setConnectTimeout(60000);  //60 Seconds
+			connection.setReadTimeout(60000);  //60 Seconds
+			
+			connection.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded;charset=UTF-8");
+			OutputStreamWriter writer = new OutputStreamWriter(
+					connection.getOutputStream());
+			writer.write(urlParameters);
+			writer.flush();
+			
+			
+			//////////// contiune here !
+			
+			
+			 String line, retJson = "";
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+
+			while ((line = reader.readLine()) != null) {
+				retJson += line;
+			}
+			
+			writer.close();
+			reader.close();
+			JSONParser parser = new JSONParser();
+			Object obj = parser.parse(retJson);
+			JSONObject object = (JSONObject) obj;
+			
+			
+			if (object.get("response").equals("request accepted"))
+				return Response.ok(new Viewable("/jsp/accepted", "")).build();
+			else if(object.get("response").equals("either this user didnt send you a request or he is already a friend"))
+				return Response.ok(new Viewable("/jsp/res1", "")).build();
+				
+			return Response.ok(new Viewable("/jsp/res2", "")).build();
+
+			 
+		}
+		catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {

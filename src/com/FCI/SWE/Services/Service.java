@@ -129,5 +129,45 @@ public class Service {
 		
 		return jsonObj.toJSONString();
 	}
+	
+	
+	
+	
+	@POST
+	@Path("/accept")
+	public String AcceptRequest(@FormParam("friendEmail") String femail,@FormParam("MyEmail") String currentEmail) 
+	{
+
+		// UserEntity user = getFriendByEmail(email);
+
+		//UserEntity user = UserEntity.getFriendByEmail(email);
+		JSONObject jsonObj = new JSONObject();
+		boolean friendIsFound = UserEntity.getFriendByEmail(femail);
+		
+		if(friendIsFound)
+		{
+		   			boolean flag2 = UserEntity.checkAcceptTable(currentEmail,
+					femail);
+					
+					if(flag2)
+					{
+						jsonObj.put("response", "request accepted");
+					}
+					else
+					{
+						jsonObj.put("response", "either this user didnt send you a request or he is already a friend");
+					}
+					
+					
+		}
+		else
+		{
+			jsonObj.put("response", "no such user");
+		}
+		
+		return jsonObj.toJSONString();
+		
+	}	
+	 
 
 }

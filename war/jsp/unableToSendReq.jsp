@@ -10,5 +10,10 @@
 Request is not sent
 <br>
 this email does not exist
+
+<br/>
+<a href="/social/SendFriendRequest/">SendFrienRequest</a> <br>
+<a href="/social/AddFriend/">Accept Friend Request</a> <br>
+<a href="/social/logout/">Log out</a> <br>
 </body>
 </html>

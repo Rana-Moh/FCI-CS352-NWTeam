@@ -7,6 +7,9 @@
 <title>Request result</title>
 </head>
 <body>
-Request is sent successfully
+<p>Request is sent successfully</p>
+<a href="/social/SendFriendRequest/">SendFrienRequest</a> <br>
+<a href="/social/AddFriend/">Accept Friend Request</a> <br>
+<a href="/social/logout/">Log out</a> <br>
 </body>
 </html>
