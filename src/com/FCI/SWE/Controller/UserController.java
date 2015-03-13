@@ -106,7 +106,7 @@ public class UserController {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String response(@FormParam("uname") String uname,
 			@FormParam("email") String email, @FormParam("password") String pass) {
-		String serviceUrl = "http://localhost:8888/rest/RegistrationService";
+		String serviceUrl = "http://social-network-proj.appspot.com/rest/RegistrationService";
 		try {
 			URL url = new URL(serviceUrl);
 			String urlParameters = "uname=" + uname + "&email=" + email
@@ -178,7 +178,7 @@ public class UserController {
 	@Produces("text/html")
 	public Response home(@FormParam("uname") String uname,
 			@FormParam("password") String pass) {
-		String serviceUrl = "http://localhost:8888/rest/LoginService";
+		String serviceUrl = "http://social-network-proj.appspot.com/rest/LoginService";
 		try {
 			URL url = new URL(serviceUrl);
 			String urlParameters = "uname=" + uname + "&password=" + pass;
@@ -276,7 +276,7 @@ public class UserController {
 	@Produces("text/html")
 	public Response sendRequestResult(@FormParam("friendEmail") String friendEmail) throws ParseException {
 		
-		String serviceUrl = "http://localhost:8888/rest/RequestAlreadySent";
+		String serviceUrl = "http://social-network-proj.appspot.com/rest/RequestAlreadySent";
 		
 		User currentUserAtClientSide = User.getCurrentActiveUser();
 		String senderEmail = currentUserAtClientSide.getEmail();
@@ -351,7 +351,7 @@ public class UserController {
 
 	public Response AcceptRequestResult(@FormParam("friendEmail") String friendEmail) throws ParseException {
 		
-		String serviceUrl = "http://localhost:8888/rest/accept";
+		String serviceUrl = "http://social-network-proj.appspot.com/rest/accept";
 		
 		User currentUserAtClientSide = User.getCurrentActiveUser();
 		String currentEmail = currentUserAtClientSide.getEmail();
