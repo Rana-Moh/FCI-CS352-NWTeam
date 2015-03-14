@@ -65,9 +65,17 @@ public class Service {
 	public String registrationService(@FormParam("uname") String uname,
 			@FormParam("email") String email, @FormParam("password") String pass) {
 		UserEntity user = new UserEntity(uname, email, pass);
-		user.saveUser();
 		JSONObject object = new JSONObject();
+		boolean flag=user.getFriendByEmail(email);
+		if(!flag)
+		{
+		user.saveUser();
 		object.put("Status", "OK");
+		}
+		else 
+		{
+			object.put("Status","no");
+		}
 		return object.toString();
 	}
 
@@ -83,10 +91,10 @@ public class Service {
 	 */
 	@POST
 	@Path("/LoginService")
-	public String loginService(@FormParam("uname") String uname,
+	public String loginService(@FormParam("email") String email,
 			@FormParam("password") String pass) {
 		JSONObject object = new JSONObject();
-		UserEntity user = UserEntity.getUser(uname, pass);
+		UserEntity user = UserEntity.getUser(email, pass);
 		if (user == null) {
 			object.put("Status", "Failed");
 
