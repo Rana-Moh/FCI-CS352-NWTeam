@@ -7,7 +7,7 @@
 </head>
 <body>
 <form action="/social/home" method="post">
-  Name : <input type="text" name="uname" /> <br>
+  E-mail : <input type="text" name="email" /> <br>
   Password : <input type="password" name="password" /> <br>
   <input type="submit" value="Login">
   
