@@ -168,7 +168,7 @@ public class UserEntity {
 	 * @return Constructed user entity
 	 */
 
-	public static UserEntity getUser(String name, String pass) {
+	public static UserEntity getUser(String email, String pass) {
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 
@@ -176,7 +176,7 @@ public class UserEntity {
 		PreparedQuery pq = datastore.prepare(gaeQuery);
 		for (Entity entity : pq.asIterable()) {
 			System.out.println(entity.getProperty("name").toString());
-			if (entity.getProperty("name").toString().equals(name)
+			if (entity.getProperty("email").toString().equals(email)
 					&& entity.getProperty("password").toString().equals(pass)) {
 
 				UserEntity returnedUser = new UserEntity(entity.getProperty(
