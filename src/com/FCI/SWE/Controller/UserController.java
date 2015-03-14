@@ -145,6 +145,8 @@ public class UserController {
 			JSONObject object = (JSONObject) obj;
 			if (object.get("Status").equals("OK"))
 				return "Registered Successfully";
+		//	else
+			//	return "this email already Exist";
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -176,12 +178,12 @@ public class UserController {
 	@POST
 	@Path("/home")
 	@Produces("text/html")
-	public Response home(@FormParam("uname") String uname,
+	public Response home(@FormParam("email") String email,
 			@FormParam("password") String pass) {
-		String serviceUrl = "http://social-network-proj.appspot.com/rest/LoginService";
+		String serviceUrl =  "http://social-network-proj.appspot.com/rest/LoginService";
 		try {
 			URL url = new URL(serviceUrl);
-			String urlParameters = "uname=" + uname + "&password=" + pass;
+			String urlParameters = "email=" + email + "&password=" + pass;
 			
 			
 			HttpURLConnection connection = (HttpURLConnection) url
