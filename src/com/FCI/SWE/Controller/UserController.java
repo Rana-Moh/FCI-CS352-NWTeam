@@ -26,6 +26,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.User;
+
 //import com.FCI.SWE.Models.User;
 
 /**
@@ -75,51 +76,52 @@ public class UserController {
 	public Response login() {
 		return Response.ok(new Viewable("/jsp/login")).build();
 	}
-	
+
 	@GET
 	@Path("/search")
 	public Response search() {
 		return Response.ok(new Viewable("/jsp/search")).build();
 	}
-	
+
 	@POST
 	@Path("/doSearch")
 	public Response usersList(@FormParam("uname") String uname) {
-		
-		String serviceUrl = "http://localhost:8888/rest/SearchService/";
-		String urlParameters = "uname="+uname;
-		String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
 
-		Map <String, Vector<User>> passedUsers = new HashMap <String, Vector<User>> ();
-		
+		String serviceUrl = "http://localhost:8888/rest/SearchService/";
+		String urlParameters = "uname=" + uname;
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+
+		Map<String, Vector<User>> passedUsers = new HashMap<String, Vector<User>>();
+
 		JSONParser parser = new JSONParser();
-		
+
 		try {
-			
-			JSONArray array = (JSONArray)parser.parse(retJson);
-			Vector <User> users = new Vector <User> ();
-			
-			for(int i=0; i<array.size(); i++) {
+
+			JSONArray array = (JSONArray) parser.parse(retJson);
+			Vector<User> users = new Vector<User>();
+
+			for (int i = 0; i < array.size(); i++) {
 				JSONObject object;
-				
+
 				object = (JSONObject) array.get(i);
-				
+
 				users.add(User.parseUserInfo(object.toJSONString()));
 			}
-			
+
 			System.out.println("users found size: " + users.size());
-			
+
 			passedUsers.put("usersList", users);
-			return Response.ok(new Viewable("/jsp/showUsers", passedUsers)).build();
-			
-		} catch (ParseException e){
+			return Response.ok(new Viewable("/jsp/showUsers", passedUsers))
+					.build();
+
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
-		
+
 	}
-	
 
 	/**
 	 * Action function to response to signup request, This function will act as
@@ -139,11 +141,13 @@ public class UserController {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String response(@FormParam("uname") String uname,
 			@FormParam("email") String email, @FormParam("password") String pass) {
-		
+
 		String serviceUrl = "http://localhost:8888/rest/RegistrationService";
-		String urlParameters = "uname=" + uname + "&email=" + email + "&password=" + pass;
-		String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
-		
+		String urlParameters = "uname=" + uname + "&email=" + email
+				+ "&password=" + pass;
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+
 		try {
 
 			JSONParser parser = new JSONParser();
@@ -176,25 +180,26 @@ public class UserController {
 			@FormParam("password") String pass) {
 		String serviceUrl = "http://localhost:8888/rest/LoginService";
 		String urlParameters = "email=" + email + "&password=" + pass;
-		String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
-		
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+
 		try {
 
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(retJson);
-			
+
 			JSONObject object = (JSONObject) obj;
-			
+
 			if (object.get("Status").equals("Failed"))
 				return null;
-			
+
 			Map<String, String> map = new HashMap<String, String>();
-			
+
 			User user = User.getUser(object.toJSONString());
-			
+
 			map.put("name", user.getName());
 			map.put("email", user.getEmail());
-			return Response.ok(new Viewable("/jsp/home",map)).build();
+			return Response.ok(new Viewable("/jsp/home", map)).build();
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -210,14 +215,13 @@ public class UserController {
 	public Response sendFriendRequest() {
 		return Response.ok(new Viewable("/jsp/SendFriendRequest")).build();
 	}
-	
+
 	@GET
 	@Path("/AddFriend")
-	public Response acceptRequest() 
-	{
+	public Response acceptRequest() {
 		return Response.ok(new Viewable("/jsp/addFriend")).build();
 	}
-	
+
 	@GET
 	@Path("/logout")
 	public Response logout() {
@@ -225,76 +229,83 @@ public class UserController {
 		u.setCurrentActiveUserToNull();
 		return Response.ok(new Viewable("/jsp/entryPoint")).build();
 	}
-	
-	//*********************************************************************
+
+	// *********************************************************************
 	@POST
 	@Path("RequestAlreadySent")
 	@Produces("text/html")
-	public Response sendRequestResult(@FormParam("friendEmail") String friendEmail) throws ParseException {
-		
+	public Response sendRequestResult(
+			@FormParam("friendEmail") String friendEmail) throws ParseException {
+
 		String serviceUrl = "http://localhost:8888/rest/RequestAlreadySent";
-		
+
 		User currentUserAtClientSide = User.getCurrentActiveUser();
 		String senderEmail = currentUserAtClientSide.getEmail();
-		String urlParameters = "friendEmail=" + friendEmail + "&senderEmail="+senderEmail;
-		String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
-		
+		String urlParameters = "friendEmail=" + friendEmail + "&senderEmail="
+				+ senderEmail;
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+
 		try {
 
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(retJson);
 			JSONObject object = (JSONObject) obj;
-			
-			
+
 			if (object.get("response").equals("request is not sent"))
-				return Response.ok(new Viewable("/jsp/unableToSendReq", "")).build();
-			
-			else if(object.get("response").equals("request was sent before"))
+				return Response.ok(new Viewable("/jsp/unableToSendReq", ""))
+						.build();
+
+			else if (object.get("response").equals("request was sent before"))
 				return Response.ok(new Viewable("/jsp/sentBefore", "")).build();
-				
-			return Response.ok(new Viewable("/jsp/RequestAlreadySent", "")).build();
-			
+
+			return Response.ok(new Viewable("/jsp/RequestAlreadySent", ""))
+					.build();
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
 
-		return null;		
+		return null;
 	}
+
 	@POST
 	@Path("AcceptAlreadySent")
 	@Produces("text/html")
+	public Response AcceptRequestResult(
+			@FormParam("friendEmail") String friendEmail) throws ParseException {
 
-	public Response AcceptRequestResult(@FormParam("friendEmail") String friendEmail) throws ParseException {
-		
 		String serviceUrl = "http://localhost:8888/rest/accept";
-		
+
 		User currentUserAtClientSide = User.getCurrentActiveUser();
 		String currentEmail = currentUserAtClientSide.getEmail();
-		String urlParameters = "friendEmail=" + friendEmail + "&MyEmail="+currentEmail;
-		String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
-		
+		String urlParameters = "friendEmail=" + friendEmail + "&MyEmail="
+				+ currentEmail;
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+
 		try {
 
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(retJson);
 			JSONObject object = (JSONObject) obj;
-			
-			
+
 			if (object.get("response").equals("request accepted"))
 				return Response.ok(new Viewable("/jsp/accepted", "")).build();
-			
-			else if(object.get("response").equals("either this user didnt send you a request or he is already a friend"))
+
+			else if (object
+					.get("response")
+					.equals("either this user didnt send you a request or he is already a friend"))
 				return Response.ok(new Viewable("/jsp/res1", "")).build();
-				
+
 			return Response.ok(new Viewable("/jsp/res2", "")).build();
-			
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return null;		
+		return null;
 	}
 }

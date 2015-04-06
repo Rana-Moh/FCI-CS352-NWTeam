@@ -12,6 +12,7 @@
 <a href="/social/SendFriendRequest/">SendFrienRequest</a> <br>
 <a href="/social/AddFriend/">Accept Friend Request</a> <br>
 <a href="/social/Group/group/">Create a Group</a> <br>
+<a href="/social/sendMSG/">Send MSG</a> <br>
 <a href="/social/logout/">Log out</a> <br>
 <p> This is should be user home page </p>
 

@@ -61,10 +61,6 @@ public class User {
 		return password;
 	}
 
-	public void setPass(String pass) {
-		this.password = pass;
-	}
-
 	public static User getCurrentActiveUser() {
 		return currentActiveUser;
 	}
@@ -87,7 +83,7 @@ public class User {
 			currentActiveUser = new User(object.get("name").toString(), object
 					.get("email").toString(), object.get("password").toString());
 
-			// here exception arises 
+			// here exception arises
 			currentActiveUser
 					.setId(Long.parseLong(object.get("id").toString()));
 
@@ -99,31 +95,32 @@ public class User {
 		return null;
 
 	}
+
 	public static void setCurrentActiveUserToNull() {
 		currentActiveUser = null;
 	}
-	
-	public static User parseUserInfo(String json){
-		
+
+	public static User parseUserInfo(String json) {
+
 		JSONParser parser = new JSONParser();
 		User user = new User();
-		
-		try{
-			
+
+		try {
+
 			JSONObject object = (JSONObject) parser.parse(json);
 			user.setName(object.get("name").toString());
 			user.setEmail(object.get("email").toString());
 			user.setId(Long.parseLong(object.get("id").toString()));
-			
-			//System.out.println(user.getName()+ " " + user.getEmail()+ " " +user.getId());
-			
-			
-		} catch(ParseException e){
+
+			// System.out.println(user.getName()+ " " + user.getEmail()+ " "
+			// +user.getId());
+
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
+
 		return user;
-		
+
 	}
 
 }

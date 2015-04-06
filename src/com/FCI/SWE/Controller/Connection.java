@@ -13,7 +13,6 @@ public class Connection {
 
 	public static String connect(String serviceUrl, String urlParameters,
 			String methodType, String contentType) {
-		//System.out.println(serviceUrl);
 		try {
 			URL url = new URL(serviceUrl);
 			HttpURLConnection connection = (HttpURLConnection) url
