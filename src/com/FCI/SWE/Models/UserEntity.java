@@ -1,5 +1,6 @@
 package com.FCI.SWE.Models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -8,6 +9,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.FCI.SWE.Controller.UserController;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -17,6 +19,13 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Transaction;
+
+
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <h1>User Entity class</h1>
@@ -28,7 +37,8 @@ import com.google.appengine.api.datastore.Transaction;
  * @version 1.0
  * @since 2014-02-12
  */
-public class UserEntity {
+public class UserEntity 
+{
 	private String name;
 	private String email;
 	private String password;
@@ -101,6 +111,41 @@ public class UserEntity {
 		}
 
 		return null;
+	}
+	
+	
+	
+	public static ArrayList<String> getFriends()
+	{
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		User u = User.getCurrentActiveUser();
+
+		ArrayList<String >friends= new ArrayList<String >();
+		
+		Query gaeQuery = new Query("requests");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) {
+			
+			if ((entity.getProperty("from").toString().equals(u.getEmail())
+					|| entity.getProperty("to").toString().equals(u.getEmail()) )
+					&& entity.getProperty("Acceptance").toString().equals("1") ) 
+			{
+
+				if(u.getEmail().equals(entity.getProperty("from").toString()))
+				{
+					friends.add(entity.getProperty("to").toString());
+					
+				}
+				if(u.getEmail().equals(entity.getProperty("to").toString()))
+				{
+					friends.add( entity.getProperty("from").toString());
+					
+				}
+			}
+		}
+				
+		return friends;
 	}
 
 	/**
@@ -191,9 +236,43 @@ public class UserEntity {
 					&& entity.getProperty("to").toString().equals(myEmail) 
 					&& entity.getProperty("Acceptance").toString().equals("0") ) 
 			{
+
+				java.util.Date date = new java.util.Date();
+				Timestamp currentTimestamp = new Timestamp(date.getTime());
+				String timpStampStr = currentTimestamp.toString();
+				entity.setProperty("time", timpStampStr);
 				
 				entity.setProperty("Acceptance","1");
 				datastore.put(entity);
+							
+			    Query queryForNotificationTable = new Query("Notification");
+				PreparedQuery preparedQuery = datastore
+						.prepare(queryForNotificationTable);
+
+				List<Entity> listOfNotificationEntries = preparedQuery
+						.asList(FetchOptions.Builder.withDefaults());
+				
+				Entity addNotification = new Entity("Notification",
+						listOfNotificationEntries.size() + 1);
+				addNotification.setProperty("type", "FriendAcceptanceNotification");
+				JSONObject notificationParameters = new JSONObject();
+				notificationParameters.put("from", femail);
+				notificationParameters.put("to", myEmail);
+				notificationParameters.put("Acceptance", "1");
+				notificationParameters.put("time", timpStampStr);
+				StringWriter out = new StringWriter();
+				try {
+					notificationParameters.writeJSONString(out);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String jsonText = out.toString();
+				addNotification.setProperty("parameters", jsonText);
+				addNotification.setProperty("user", femail);
+				addNotification.setProperty("time", timpStampStr);
+				datastore.put(addNotification);
+					
 				return true;
 			}
 		}
@@ -216,8 +295,42 @@ public class UserEntity {
 			addFriendRequest.setProperty("to", friendEmail);
 			addFriendRequest.setProperty("Acceptance", "0");
 			
+			java.util.Date date = new java.util.Date();
+			Timestamp currentTimestamp = new Timestamp(date.getTime());
+			String timpStampStr = currentTimestamp.toString();
+			addFriendRequest.setProperty("time", timpStampStr);
+			
+			
 			datastore.put(addFriendRequest);
 
+			
+
+			Query queryForNotificationTable = new Query("Notification");
+			PreparedQuery preparedQuery = datastore
+					.prepare(queryForNotificationTable);
+
+			List<Entity> listOfNotificationEntries = preparedQuery
+					.asList(FetchOptions.Builder.withDefaults());
+			Entity addNotification = new Entity("Notification",
+					listOfNotificationEntries.size() + 1);
+			addNotification.setProperty("type", "FriendRequestNotification");
+			JSONObject notificationParameters = new JSONObject();
+			notificationParameters.put("from", senderEmail);
+			notificationParameters.put("to", friendEmail);
+			notificationParameters.put("Acceptance", "0");
+			notificationParameters.put("time", timpStampStr);
+			StringWriter out = new StringWriter();
+			try {
+				notificationParameters.writeJSONString(out);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String jsonText = out.toString();
+			addNotification.setProperty("parameters", jsonText);
+			addNotification.setProperty("user", friendEmail);
+			addNotification.setProperty("time", timpStampStr);
+			datastore.put(addNotification);
 			return true;
 		}
 		

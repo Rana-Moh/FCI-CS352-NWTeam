@@ -7,15 +7,19 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -27,6 +31,9 @@ import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.User;
 //import com.FCI.SWE.Models.User;
+import com.FCI.SWE.Models.UserEntity;
+
+
 
 /**
  * This class contains REST services, also contains action function for web
@@ -40,6 +47,10 @@ import com.FCI.SWE.Models.User;
 @Path("/")
 @Produces("text/html")
 public class UserController {
+	
+	
+	//public static  String [] selected= new String [100];
+
 	/**
 	 * Action function to render Signup page, this function will be executed
 	 * using url like this /rest/signup
@@ -119,7 +130,7 @@ public class UserController {
 		return null;
 		
 	}
-	
+
 
 	/**
 	 * Action function to response to signup request, This function will act as
@@ -219,6 +230,7 @@ public class UserController {
 	{
 		return Response.ok(new Viewable("/jsp/addFriend")).build();
 	}
+	
 	
 	@GET
 	@Path("/logout")
