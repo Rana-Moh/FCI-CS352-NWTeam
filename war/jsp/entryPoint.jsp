@@ -3,11 +3,51 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
-<title>Insert title here</title>
+<title>Social Media</title>
+<style>
+
+.button
+{
+    width:90px;
+    height: 30px;
+    color: blue;
+    line-height: 20px;
+    padding-bottom: 2px;
+    vertical-align: middle;
+    font-family: font-family:verdana;
+    font-size: 20px;
+  
+}
+body 
+{
+   background-image: url("${pageContext.request.contextPath}/pic2.png");
+}
+p {border-style: solid;}
+p.solid 
+{
+ border-bottom-style: solid;
+ border-width: 120px;
+ border-width: 120px;
+ border-color: #000000;
+
+}
+h1{ 
+    display: block;
+    font-size: 3em;
+    margin-top: 0.67em;
+    margin-bottom: 0.67em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
-<a href="/social/signup/">Sign up</a> <br>
-<a href="/social/login/">Login</a> <br>
+<img src="${pageContext.request.contextPath}/pic3.jpg"  style="width:304px;height:228px">
+<div class="container"  style="width:400px; margin-right:auto; margin-left:auto; color:blue;">
+<h1 style="color:white" >Social Media</h1>
+<a href="/social/signup/" style="color:black;font-size:40px;">Signup</a> <br><br><br>
+<a href="/social/login/" style="color:black;font-size:40px;">Login</a> <br>
 
 
 </body>
