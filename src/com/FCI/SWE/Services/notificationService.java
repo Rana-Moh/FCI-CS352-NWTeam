@@ -72,23 +72,41 @@ public class notificationService
 		
 		
 	}
-	
-	
+	/*
 	@GET
-	@Path("/parseNotification")
-	public String notification(@QueryParam("type") String type, @QueryParam("paramters")String paramters)
+	@Path("/dumby")
+	public String dumb()
 	{
+		NotificationEntity.insertdumb();
+		
+		return null;
+	}
+	*/
+	@POST
+	@Path("/parseNotification")
+	public String notification(@FormParam("type") String type, @FormParam("parameters")String parameters)
+	{
+		System.out.println("here !"+type+" " +parameters);
+		
+		
+		
 		INotificationTypes temp =null;
+		System.out.print("here!");
 		
-		//temp=temp.getNotification(type);
-		if(type=="msg")
+		temp=NotificationEntity.getCommand(type);
+		/*
+		if(type.equals("msg"))
 			temp=new SelectiondOfConversationMessageNotification();
-		if(type=="FriendRequestNotification")
+		if(type.equals("FriendRequestNotification"))
+		{
+			System.out.print("!!!!!!!!!!");
 			temp=new SelectionOfFriendRequestNotification();
-		if(type=="FriendAcceptanceNotification")
+		}
+		if(type.equals("FriendAcceptanceNotification"))
 			temp= new SelectionOfAcceptanceNotification();
+		*/
 		
-		String newN = temp.viewNotication(paramters);
+		String newN = temp.viewNotication(parameters);
 		
 		
 		

@@ -12,6 +12,7 @@ import java.util.Vector;
 
 
 
+
 import org.json.simple.JSONObject;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -28,43 +29,36 @@ import org.json.simple.parser.ParseException;
 
 public class SelectionOfFriendRequestNotification implements INotificationTypes
 {
-	public static List<String> stringToList(String e)
+	public static  String stringToList(String e)
 	{
-		e=e.substring(1,e.length()-1);
-		return Arrays.asList(e.split(","));
+		//e=e.substring(1,e.length()-1);
+		System.out.println("in split "+ e);
+		JSONParser parser = new JSONParser();
+		try {
+			JSONObject obj = (JSONObject)parser.parse(e);
+			return obj.get("from").toString();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return null;//Arrays.asList(e.split(","));
 		
 	}
 	
 
-	@Override
-	public INotificationTypes getNotification(String S) 
-	{
 
-		INotificationTypes temp=null;
-		
-		try
-		{
-			temp=(INotificationTypes)Class.forName("com.FCI.SWE.Models.SelectionOfFriendRequestNotification").newInstance();
-			
-		}
-		catch(Exception e)
-		{
-				
-		}
-		
-		return temp;
-	
-	}
 
 	@Override
 	public String viewNotication(String S) 
 	{
 		
-		
-		
-
+		System.out.println("here2"+ S);
 		JSONObject object = new JSONObject();
-		return object.put("response",stringToList(S).get(3)).toString();
+		String resKey= stringToList(S);
+		System.out.println(resKey);		
+		object.put("response",resKey);
+		return object.toJSONString();
 
 	}
 

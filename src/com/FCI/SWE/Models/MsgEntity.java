@@ -257,8 +257,8 @@ public class MsgEntity
 			recievers=getreciveres(cname,email);
 			
 			Query gaeQuery1 = new Query("Notification");
-			PreparedQuery pq1 = datastore.prepare(gaeQuery);
-			List<Entity> list1 = pq.asList(FetchOptions.Builder.withDefaults());
+			PreparedQuery pq1 = datastore.prepare(gaeQuery1);
+			List<Entity> list1 = pq1.asList(FetchOptions.Builder.withDefaults());
 			
 			
 			

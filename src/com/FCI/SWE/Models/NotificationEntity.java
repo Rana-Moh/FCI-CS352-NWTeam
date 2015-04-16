@@ -24,6 +24,9 @@ import com.google.appengine.api.datastore.Transaction;
 
 
 
+
+
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.Timestamp;
@@ -67,6 +70,90 @@ public class NotificationEntity
 
 		return null;
 	}
+	
+
+	
+	public static INotificationTypes getCommand(String Type) {
+
+		INotificationTypes temp=null;
+		String S= selectCommand(Type);
+		try
+		{
+			temp=(INotificationTypes)Class.forName("com.FCI.SWE.Models."+S).newInstance();
+			
+		}
+		catch(Exception e)
+		{
+				
+		}
+		
+		return temp;
+	
+	}
+
+
+
+	private static String selectCommand(String type2) 
+	{
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		
+		Query gaeQuery = new Query("Map");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) 
+		{
+			if  (entity.getProperty("Type").toString().equals(type2))
+			{
+				return entity.getProperty("class").toString();
+				
+			}
+		}
+
+		
+		return null;
+	}
+
+
+/*
+	public static void insertdumb() 
+	{
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		
+		Query gaeQuery = new Query("Map");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
+		
+		Entity con = new Entity("Map", list.size() + 1);
+		con.setProperty("Type","msg");
+		con.setProperty("class", "SelectiondOfConversationMessageNotification");
+		datastore.put(con);
+
+		Query gaeQuery1 = new Query("Map");
+		PreparedQuery pq1 = datastore.prepare(gaeQuery1);
+		List<Entity> list1 = pq1.asList(FetchOptions.Builder.withDefaults());
+		
+		Entity con1= new Entity("Map", list1.size()+1);
+		con1.setProperty("Type","FriendAcceptanceNotification");
+		con1.setProperty("class", "SelectionOfAcceptanceNotification");
+		datastore.put(con1);
+
+		Query gaeQuery11 = new Query("Map");
+		PreparedQuery pq11 = datastore.prepare(gaeQuery11);
+		List<Entity> list11 = pq11.asList(FetchOptions.Builder.withDefaults());
+		
+		Entity con11= new Entity("Map", list11.size()+1);
+		con1.setProperty("Type","FriendRequestNotification");
+		con1.setProperty("class", "SelectionOfFriendRequestNotification");
+		datastore.put(con11);
+		
+		System.out.println("nnn");
+
+		
+		
+	}
+*/
 
 	
 

@@ -24,20 +24,17 @@
 				for (int i = 0; i < NotificationEntity.type.size(); i++) {
 			%>
 			<tr Align="Center">
-				<TD BGColor="white"><Font size="4"><I>
-
-
-					</I></Font></td>
-
+				
 				<td BGColor="white"><Font size="4"><I>
 				<input
 							type="radio"  name="type"
 							value="<%= NotificationEntity.type.get(i)%>"
 				 >
-				
+				</TD>
+				<TD>
 				<input
-							type="hidden"  name="paramters"
-							value="<%= NotificationEntity.parameters.get(i)%>"
+							type="hidden"  name="parameters"
+							value='<%= NotificationEntity.parameters.get(i)%>'
 				 >
 				
 				 <%

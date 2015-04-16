@@ -29,6 +29,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.FCI.SWE.Models.MsgEntity;
 import com.FCI.SWE.Models.User;
 //import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.UserEntity;
@@ -50,6 +51,8 @@ import com.FCI.SWE.Models.UserEntity;
 
 public class notificationContoller 
 {
+	
+	public static String accepted;
 	/*@GET
 	@Path("/viewN")
 	public Response viewN()
@@ -76,12 +79,13 @@ public class notificationContoller
 	@GET
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/parseNotification")
-	public String notification(@QueryParam("type") String type, @QueryParam("paramters")String paramters)
+	public Response notification(@QueryParam("type") String type, @QueryParam("parameters")String parameters)
 	{
+		System.out.println(type + "  "+ parameters);
 		String serviceUrl = "http://localhost:8888/rest/parseNotification/";
-		String urlParameters = "type=" + type+"&paramters="+paramters;
+		String urlParameters = "type=" + type+"&parameters="+parameters;
 		
-		String retJson = Connection.connect(serviceUrl, urlParameters, "GET",
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		
 		try {
@@ -90,7 +94,53 @@ public class notificationContoller
 			Object obj = parser.parse(retJson);
 			JSONObject object = (JSONObject) obj;
 				
-			return (String) object.get("response");
+			if(type.equals("FriendRequestNotification"))
+			{
+				String SUrl="http://localhost:8888/rest/accept";
+				String url="friendEmail="+(String)object.get("response")+"&MyEmail="+User.getCurrentActiveUser();
+				String retJSon1=Connection.connect(SUrl, url, "POST",				
+						"application/x-www-form-urlencoded;charset=UTF-8");
+				
+				JSONParser parser1 = new JSONParser();
+				Object obj1 = parser1.parse(retJSon1);
+				JSONObject object1 = (JSONObject) obj1;
+				
+				
+				if (object1.get("response").equals("request accepted"))
+					return Response.ok(new Viewable("/jsp/accepted", "")).build();
+				
+				else if(object1.get("response").equals("either this user didnt send you a request or he is already a friend"))
+					return Response.ok(new Viewable("/jsp/res1", "")).build();
+					
+				return Response.ok(new Viewable("/jsp/res2", "")).build();
+				
+			}
+			else if(type.equals("msg"))
+			{
+				String SUrl="http://localhost:8888/rest/replyToMsg";
+				String url="cname="+(String)object.get("response");
+				String retJSon1=Connection.connect(SUrl, url, "POST", 				
+						"application/x-www-form-urlencoded;charset=UTF-8");
+				
+				JSONParser parser1 = new JSONParser();
+				Object obj1 = parser1.parse(retJSon1);
+				JSONObject object1 = (JSONObject) obj1;
+				
+				if (object1.get("response").equals("msg is sent"))
+				{
+					MsgEntity.getmsg((String)object.get("response"));
+					return Response.ok(new Viewable("/jsp/viewConversation")).build();
+				}
+				
+			}
+			
+			
+			else
+			{
+				accepted=(String)object.get("response");
+				return Response.ok(new Viewable("/jsp/accepted1")).build();
+			}
+			
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
