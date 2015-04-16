@@ -12,8 +12,13 @@
 <a href="/social/SendFriendRequest/">SendFrienRequest</a> <br>
 <a href="/social/AddFriend/">Accept Friend Request</a> <br>
 <a href="/social/Group/group/">Create a Group</a> <br>
-<a href="/social/sendMSG/">Send MSG</a> <br>
 <a href="/social/logout/">Log out</a> <br>
+<a href="/social/getFriends/">create new chat</a><br>
+<a href="/social/reply/">reply to an existing chat</a><br>
+<a href="/social/add/">add a new member to an existing chat</a><br/>
+<a href="/social/AllNotification/">view all notifications</a><br/>
+<a href="/social/postPlace/">Create Post</a>
+
 <p> This is should be user home page </p>
 
 </body>

@@ -93,7 +93,8 @@ public class Service {
 	 * Login Rest Service, this service will be called to make login process
 	 * also will check user data and returns new user from datastore
 	 * 
-	 * 
+	 * @param uname
+	 *            provided user name
 	 * @param pass
 	 *            provided user password
 	 * @return user in json format
@@ -176,6 +177,14 @@ public class Service {
 		return jsonObj.toJSONString();
 		
 	}	
+	
+	/**
+	 * Search Rest service, this service will be called to search for a user that's
+	 * in the data store
+	 * @param email
+	 *            provided friend's email to search for
+	 * @return Status json
+	 */
 	
 	@POST
 	@Path("/SearchService")

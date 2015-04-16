@@ -81,7 +81,17 @@ public class UserEntity
 	}
 
 	
-	
+	/**
+	 * 
+	 * This static method will form UserEntity class using user name and
+	 * password This method will serach for user in datastore
+	 * 
+	 * @param name
+	 *            user name
+	 * @param pass
+	 *            user password
+	 * @return Constructed user entity
+	 */
 
 	public static UserEntity getUser(String email, String pass) {
 		DatastoreService datastore = DatastoreServiceFactory
@@ -217,9 +227,9 @@ public class UserEntity
 	public static boolean checkAcceptTable(String myEmail, String femail) {
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
+
 		Query gaeQuery = new Query("requests");
 		PreparedQuery pq = datastore.prepare(gaeQuery);
-		
 		for (Entity entity : pq.asIterable()) {
 			
 			if (entity.getProperty("from").toString().equals(femail)

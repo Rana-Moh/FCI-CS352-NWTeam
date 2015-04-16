@@ -6,4 +6,4 @@ gaeHrdEnabled=true
 gaeLaunchAppInBrowser=true
 googleCloudSqlEnabled=false
 localDevMySqlEnabled=true
-validationExclusions=src/com/FCI/SWE/Controller/UserController.java
+validationExclusions=src/com/FCI/SWE/Controller/UserController.java|src/com/FCI/SWE/Models/SelectionOfFriendRequestNotification.java
