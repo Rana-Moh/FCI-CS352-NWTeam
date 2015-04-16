@@ -1,7 +1,7 @@
 package com.FCI.SWE.Models;
 
-import java.sql.Timestamp;
 import java.util.List;
+import java.util.Vector;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -10,54 +10,84 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Transaction;
+import com.google.appengine.labs.repackaged.org.json.JSONArray;
+import org.json.simple.JSONObject;
 
 public class PostEntity {
 
+	private String feeling;
 	private String postContent;
 	private String postPlace;
 	private int numOfLikes;
 	private int numOfSeens;
 	private String privacy;
-	private Timestamp postTimestamp;
+	private String postTimestamp;
+	private String writerEmail;
+	Vector<String> postHashTags = new Vector<String>();
 
-	 
-	public String createPost(String writerEmail, String postContent,
-			String privacy) {
+	public Vector<String> getPostsHashTags() {
+		String[] postWords = postContent.split(" ");
+		for (int i = 0; i < postWords.length; i++) {
+			if (postWords[i].charAt(0) == '#') {
+				postHashTags.add(postWords[i]);
+			}
+		}
+		System.out.println("!!!!!!!!!!!!!!!   "+postHashTags.toString());
+		return postHashTags;
+	}
+
+	public String convertHashTagVecToStr() {
+
+//		String result = "";
+//		for (int i = 0; i < postHashTags.size(); i++) {
+//			result += (postHashTags.get(i)+"+");
+//		
+//		}
+//		return result;
+		JSONArray returnedJson = new JSONArray();
+		JSONObject obj = new JSONObject();
+		for (int i = 0; i < postHashTags.size(); i++) {
+
+			obj.put("hashTag", postHashTags.get(i));
+			returnedJson.put(obj);
+		}
+		return returnedJson.toString();
+		
+		
+	}
+
+	public String createPost() {
+
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
 		Transaction txn = datastore.beginTransaction();
 		Query gaeQuery = new Query("posts");
 		PreparedQuery pq = datastore.prepare(gaeQuery);
-		
-
 
 		List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
-		java.util.Date date = new java.util.Date();
-		postTimestamp = new Timestamp(date.getTime());
-		String timpStampStr = postTimestamp.toString();
-		postPlace = "timeline/" + writerEmail;
-		numOfLikes = 0;
-		numOfSeens = 0;
-		this.privacy = privacy;
 
 		try {
 			Entity post = new Entity("posts", list.size() + 1);
 			post.setProperty("postContent", postContent);
 			post.setProperty("writerEmail", writerEmail);
-			post.setProperty("likes", "0");
-			post.setProperty("seens", "0");
+			post.setProperty("likes", 0);
+			post.setProperty("seens", 0);
 			post.setProperty("postPlace", postPlace);
 			post.setProperty("privacy", privacy);
-			post.setProperty("time", timpStampStr);
+			post.setProperty("time", postTimestamp);
+			post.setProperty("feeling", feeling);
+			
+			getPostsHashTags();
+			String hashVec = convertHashTagVecToStr();
+			post.setProperty("hashTags", hashVec);
 			datastore.put(post);
-			System.out.println("NNNNNNNNNNNNNNNNNNNNNNNNNN");
 			txn.commit();
-		}finally{
+		} finally {
 			if (txn.isActive()) {
-		        txn.rollback();
-		    }
+				txn.rollback();
+			}
 		}
-	
+
 		return "postCreated";
 
 	}
@@ -102,12 +132,35 @@ public class PostEntity {
 		this.privacy = privacy;
 	}
 
-	public Timestamp getPostTimestamp() {
+	public String getPostTimestamp() {
 		return postTimestamp;
 	}
 
-	public void setPostTimestamp(Timestamp postTimestamp) {
+	public void setPostTimestamp(String postTimestamp) {
 		this.postTimestamp = postTimestamp;
 	}
 
+	public String getWriterEmail() {
+		return writerEmail;
+	}
+
+	public void setWriterEmail(String writerEmail) {
+		this.writerEmail = writerEmail;
+	}
+
+	public Vector<String> getPostHashTags() {
+		return postHashTags;
+	}
+
+	public void setPostHashTags(Vector<String> postHashTags) {
+		this.postHashTags = postHashTags;
+	}
+
+	public String getFeeling() {
+		return feeling;
+	}
+
+	public void setFeeling(String feeling) {
+		this.feeling = feeling;
+	}
 }

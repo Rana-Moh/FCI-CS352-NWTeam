@@ -31,6 +31,7 @@ import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.UserEntity;
+import com.google.apphosting.utils.config.ClientDeployYamlMaker.Request;
 
 /**
  * @author Esraa Salem
@@ -76,12 +77,18 @@ public class PostController {
 	@POST
 	@Path("/AllPosts")
 	@Produces("text/html")
-	public Response response(@FormParam("postContent") String postContent) {
-		String privacy = "";
+	public Response response(@FormParam("postContent") String postContent,
+			@FormParam("privacy") String privacy,
+			@FormParam("postPlace") String postPlace,
+			@FormParam("Feelings") String Feeling) {
+			
+		
+		
+		System.out.println("postPlace hhhhhhhhhhhhhhhh = "+ Feeling);
 		String writerEmail = User.getCurrentActiveUser().getEmail();
 		String serviceUrl = "http://localhost:8888/rest/CreatePost";
 		String urlParameters = "postContent=" + postContent + "&writerEmail="
-				+ writerEmail;
+				+ writerEmail + "&privacy=" + privacy+"&postPlace=" + postPlace+"&Feeling=" + Feeling;
 		String result = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		if (result.equals("postCreated"))

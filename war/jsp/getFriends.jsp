@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=windows-1256"
 	pageEncoding="windows-1256"%>
 <%@ page import="com.FCI.SWE.Controller.MsgController"%>
-<%@ page import ="java.util.ArrayList" %>
-<%@ taglib prefix="c" 
-		uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
 
@@ -29,11 +28,9 @@
 				for (int i = 0; i < MsgController.friends.size(); i++) {
 			%>
 			<tr Align="Center">
-				<TD BGColor="white"><Font size="4"><I>
-				 <input
-							type="checkbox"  name="Email"
-							value="<%= MsgController.friends.get(i)  %>"
-				 >
+				<TD BGColor="white"><Font size="4"><I> <input
+							type="checkbox" name="Email"
+							value="<%=MsgController.friends.get(i)%>">
 
 					</I></Font></td>
 
@@ -48,7 +45,7 @@
 			%>
 
 		</table>
-				<input type="submit" value="send msg">
+		<input type="submit" value="send msg">
 	</form>
 
 

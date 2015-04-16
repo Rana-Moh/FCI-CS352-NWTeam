@@ -8,6 +8,19 @@
 </head>
 <body>
 
+<!-- <form action="/social/FriendList/" method="POST"> -->
+<!-- <input type="submit" value="FriendList" /> -->
+<!-- </form> -->
+
+<!-- <form action="/social/TimeLine/" method="POST"> -->
+<!-- <input type="submit" value="FriendList" /> -->
+<!-- </form> -->
+
+<!-- <form action="/social/FriendList/" method="POST"> -->
+<!-- <input type="submit" value="FriendList" /> -->
+<!-- </form> -->
+
+
 <a href="/social/FriendList/">Show Friend List</a>
 <a href="/social/TimeLine/">My Time Line</a>
 <a href="/social/PostOnPage/">show All pages</a>
