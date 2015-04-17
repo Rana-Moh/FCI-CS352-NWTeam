@@ -16,32 +16,36 @@ import com.FCI.SWE.Models.User;
 
 @Path("/")
 @Produces("text/html")
-public class GroupController {
-
+public class PageController {
+	
 	@GET
-	@Path("/group")
-	public Response group() {
+	@Path("/page")
+	public Response page() {
+		
+		System.out.println("IN PAGE CONTROLLER /page");
 
 		if (User.getCurrentActiveUser() == null) {
 			return Response.serverError().build();
 		}
-		return Response.ok(new Viewable("/jsp/createGroup")).build();
+		return Response.ok(new Viewable("/jsp/createPage")).build();
 	}
 
+	
 	@POST
-	@Path("/CreateGroup")
-	public String createGroup(@FormParam("name") String name,
-			@FormParam("desc") String desc, @FormParam("privacy") String privacy) {
+	@Path("/CreatePage")
+	public String createPage(@FormParam("name") String name,
+			@FormParam("type") String type, @FormParam("category") String category) {
 		
-		System.out.println("in CreateGroup in GroupController");
+		System.out.println("IN PAGE CONTROLLER /CreatePage");
+		
 
-		String serviceUrl = "http://localhost:8888/rest/CreateGroupService";
+		String serviceUrl = "http://localhost:8888/rest/CreatePageService";
 		String urlParameters = "user_id=" + User.getCurrentActiveUser().getId()
-				+ "&name=" + name + "&desc=" + desc + "&privacy=" + privacy;
+				+ "&name=" + name + "&type=" + type + "&category=" + category;
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		
-		System.out.println(retJson);
+		System.out.println(retJson); //?????
 		
 		JSONParser parser = new JSONParser();
 		Object obj;
@@ -49,7 +53,7 @@ public class GroupController {
 			obj = parser.parse(retJson);
 			JSONObject object = (JSONObject) obj;
 			if (object.get("Status").equals("OK"))
-				return "Group created Successfully";
+				return "Page created Successfully";
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

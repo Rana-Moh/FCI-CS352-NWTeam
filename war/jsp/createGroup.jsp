@@ -5,7 +5,7 @@
   <title>Welcome!</title>
 </head>
 <body>
-  <form action="/social/Group/CreateGroup" method="post">
+  <form action="/social/CreateGroup" method="post">
   Name : <input type="text" name="name" /> <br>
   Description : <textarea rows="5" cols="5" name = "desc"></textarea> <br>
   Privacy : <select name = "privacy">
