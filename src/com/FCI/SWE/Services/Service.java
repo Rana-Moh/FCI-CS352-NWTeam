@@ -189,9 +189,12 @@ public class Service {
 	@POST
 	@Path("/SearchService")
 	public String search(@FormParam("uname") String s){
+		
 		System.out.println(s);
 		System.out.println("fel services "+ s);
+		
 		Vector <UserEntity> users = UserEntity.searchUser(s);
+		
 		JSONArray returnedJson = new JSONArray();
 	
 		for(UserEntity user: users)

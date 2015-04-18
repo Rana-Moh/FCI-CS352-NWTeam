@@ -50,13 +50,15 @@ h1{
 <a href="/social/search/" style="color:#0066FF;font-size:20px;">Search for a friend</a> <br><br>
 <a href="/social/SendFriendRequest/"  style="color:#0066FF;font-size:20px;">SendFrienRequest</a> <br><br>
 <a href="/social/AddFriend/"  style="color:#0066FF;font-size:20px;">Accept Friend Request</a> <br><br>
-<a href="/social/group/"  style="color:#0066FF;font-size:20px;">Create a Group</a> <br><br>
+<a href="/social/Group/group/"  style="color:#0066FF;font-size:20px;">Create a Group</a> <br><br>
 <a href="/social/logout/"  style="color:#0066FF;font-size:20px;">Log out</a> <br><br>
 <a href="/social/getFriends/"  style="color:#0066FF;font-size:20px;">create new chat</a><br><br>
 <a href="/social/reply/"  style="color:#0066FF;font-size:20px;">reply to an existing chat</a><br><br>
 <a href="/social/add/"  style="color:#0066FF;font-size:20px;">add a new member to an existing chat</a><br/><br>
+<a href="/social/AllNotification/"  style="color:#0066FF;font-size:20px;">view all notifications</a><br/><br>
+<a href="/social/postPlace/"  style="color:#0066FF;font-size:20px;">Choose place to post</a><br/><br>
 <a href="/social/page/"  style="color:#0066FF;font-size:20px;">Create a Page</a><br/><br>
-<a href="/social/AllNotification/"  style="color:#0066FF;font-size:20px;">view all notifications</a>
+<a href="/social/pageSearch/"  style="color:#0066FF;font-size:20px;">Search for a Page</a><br/><br>
 
 
 </body>

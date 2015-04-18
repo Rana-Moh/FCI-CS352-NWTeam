@@ -9,14 +9,14 @@
 
 .button
 {
-    width:90px;
-    height: 30px;
+    width:150px;
+    height: 60px;
     color: blue;
     line-height: 20px;
     padding-bottom: 2px;
     vertical-align: middle;
     font-family: font-family:verdana;
-    font-size: 20px;
+    font-size: 40px;
   
 }
 body 
@@ -48,10 +48,9 @@ h1{
 <img src="${pageContext.request.contextPath}/pic.jpg"  style="width:304px;height:228px">
 <div class="container"  style="width:400px; margin-right:auto; margin-left:auto; color:blue;">
 <form action="/social/addMember" method="get">
-    <input type="text"  placeholder="Conversation Name" name="cname" /> <br>
-    <br><br><br> 
-    <input type="text" placeholder="Member Email" name="email" /> <br> 
-<input type="submit" value="send"> </form> 
+    <input type="text"  placeholder="Conversation Name" name="cname" /> <br><br>
+    <input type="text" placeholder="Member Email" name="email" /> <br><br> 
+<input type="submit" value="send" class="button"> </form> 
 	</section><!-- content -->
 </div><!-- container -->
 </body>

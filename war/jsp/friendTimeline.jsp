@@ -6,9 +6,11 @@
 </head>
 <body>
 <script>
-
+function myFunction() {
+    alert("I am an alert box!");
+}
 </script>
-<form action="/social/MsgName" method="get">
+<form action="/social/TimeLine" method="get">
     conversation Name : <input type="text" style="width:200px" name="cname" /> <br>
     <br><br><br> 
     Message Content : <input type="text" style="width:200px; height:100px;" name="content" /> <br> 

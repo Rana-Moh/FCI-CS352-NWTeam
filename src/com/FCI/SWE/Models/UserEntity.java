@@ -94,18 +94,23 @@ public class UserEntity
 	 */
 
 	public static UserEntity getUser(String email, String pass) {
+		
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
-
 		Query gaeQuery = new Query("users");
 		PreparedQuery pq = datastore.prepare(gaeQuery);
+		
 		for (Entity entity : pq.asIterable()) {
+			
 			if (entity.getProperty("email").toString().equals(email)
 					&& entity.getProperty("password").toString().equals(pass)) {
+				
 				UserEntity returnedUser = new UserEntity(entity.getProperty(
 						"name").toString(), entity.getProperty("email")
 						.toString(), entity.getProperty("password").toString());
+				
 				returnedUser.setId(entity.getKey().getId());
+				
 				return returnedUser;
 			}
 		}
@@ -338,7 +343,7 @@ public class UserEntity
 
 	}
 
-	public static Vector<UserEntity> searchUser(String uname) {
+	public static Vector <UserEntity> searchUser(String uname) {
 			// TODO Auto-generated method stub
 			
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

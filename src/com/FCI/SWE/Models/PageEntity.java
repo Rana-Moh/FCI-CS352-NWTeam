@@ -1,6 +1,12 @@
 package com.FCI.SWE.Models;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -16,8 +22,20 @@ public class PageEntity {
 	private String name;
 	private String type;
 	private String category;
-	private long ownerId;
+	private String owner;
 	
+	public PageEntity() {
+		this.name = "";
+		this.type = "";
+		this.category = "";
+	}
+	
+	public PageEntity(String name, String type, String category) {
+		this.name = name;
+		this.type = type;
+		this.category = category;
+	}
+
 	public String getName(){
 		return name;
 	}
@@ -30,8 +48,8 @@ public class PageEntity {
 		return category;
 	}
 	
-	public long getOwnerId(){
-		return ownerId;
+	public String getOwner(){
+		return owner;
 	}
 	
 	public void setName(String name){
@@ -46,8 +64,8 @@ public class PageEntity {
 		this.category = category;
 	}
 	
-	public void setOwnerId(long id){
-		this.ownerId = id;
+	public void setOwner(String owner){
+		this.owner = owner;
 	}
 	
 	public Boolean savePage() {
@@ -61,6 +79,11 @@ public class PageEntity {
 		PreparedQuery pq = datastore.prepare(gaeQuery);
 		
 		List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
+		
+		//System.out.println("Page exists: " + pageExists());
+		
+		if(pageExists() == true)
+			return false;
 
 		try {
 		Entity page = new Entity("pages", list.size() + 1);
@@ -68,7 +91,7 @@ public class PageEntity {
 		page.setProperty("name", this.name);
 		page.setProperty("type", this.type);
 		page.setProperty("category", this.category);
-		page.setProperty("owner_id",this.ownerId);
+		page.setProperty("owner",this.owner);
 		
 		datastore.put(page);
 		txn.commit();
@@ -76,7 +99,7 @@ public class PageEntity {
 		System.out.println(this.name);
 		System.out.println(this.type);
 		System.out.println(this.category);
-		System.out.println(this.ownerId);
+		System.out.println(this.owner);
 		
 		} finally{
 			if (txn.isActive()) {
@@ -87,5 +110,149 @@ public class PageEntity {
 		return true;
 
 	}
+
+	public static Vector <PageEntity> search4Pages(String pageName) {
+		// TODO Auto-generated method stub
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query gae = new Query("pages");
+		PreparedQuery preparedQuery = datastore.prepare(gae);
+		
+		Vector <PageEntity> returnedPages = new Vector <PageEntity> ();
+		
+		for(Entity entity : preparedQuery.asIterable())
+		{
+			entity.getKey().getId();
+			String currentPageName = entity.getProperty("name").toString();
+			System.out.println("Page name = " + currentPageName);
+			if(currentPageName.contains(pageName))
+			{
+				PageEntity page = new PageEntity(entity.getProperty("name").toString(), 
+						entity.getProperty("type").toString(), 
+						entity.getProperty("category").toString());
+				
+				returnedPages.add(page);
+			}
+		}
+		
+		
+		return returnedPages;
+	}
+
+	public static PageEntity parsePageInfo(String json) {
+		
+		JSONParser parser = new JSONParser();
+		PageEntity page = new PageEntity();
+		
+		try{
+			
+			JSONObject object = (JSONObject) parser.parse(json);
+			page.setName(object.get("name").toString());
+			page.setType(object.get("type").toString());
+			page.setCategory(object.get("category").toString());
+			
+			
+		} catch(ParseException e){
+			e.printStackTrace();
+		}
+		
+		return page;
+		
+	}
+	
+	public Boolean pageExists(){
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query gae = new Query("pages");
+		PreparedQuery preparedQuery = datastore.prepare(gae);
+		
+		for(Entity entity : preparedQuery.asIterable())
+		{
+			entity.getKey().getId();
+			String currentPageName = entity.getProperty("name").toString();
+			if(currentPageName.equals(name))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public Boolean likeExists(String userEmail){
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Query gae = new Query("likes");
+		PreparedQuery preparedQuery = datastore.prepare(gae);
+		
+		for(Entity entity : preparedQuery.asIterable())
+		{
+			entity.getKey().getId();
+			String currentPageName = entity.getProperty("pageName").toString();
+			String currentUserEmail = entity.getProperty("userEmail").toString();
+			if(currentPageName.equals(name) && currentUserEmail.equals(userEmail))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public Boolean saveLike(String userEmail) {
+		
+		System.out.println("IN PAGE ENTITY /saveLike");
+		System.out.println("userEmail: " + userEmail);
+		System.out.println("page Name: " + name);
+		
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		Transaction txn = datastore.beginTransaction();
+		Query gaeQuery = new Query("likes");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		
+		List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
+		
+		//System.out.println("Like exists: " + likeExists());
+		
+		if(likeExists(userEmail) == true)
+			return false;
+
+		try {
+		Entity like = new Entity("likes", list.size() + 1);
+
+		like.setProperty("userEmail", userEmail);
+		like.setProperty("pageName" , name);
+		
+		datastore.put(like);
+		txn.commit();
+		
+		} finally{
+			if (txn.isActive()) {
+		        txn.rollback();
+		    }
+		}
+		
+		return true;
+
+	}
+
+	public static ArrayList<String> getLikers(String pageNamecurr) {
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		User u = User.getCurrentActiveUser();
+
+		ArrayList<String >likers= new ArrayList<String >();
+		
+		Query gaeQuery = new Query("likes");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) {
+			
+			if (entity.getProperty("pageName").toString().equals(pageNamecurr)) 
+			{
+				likers.add(entity.getProperty("pageName").toString());
+				
+			}
+		}
+				
+		return likers;
+	}
+
 
 }
