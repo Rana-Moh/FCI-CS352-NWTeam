@@ -211,7 +211,7 @@ public class PageEntity {
 		
 		//System.out.println("Like exists: " + likeExists());
 		
-		if(likeExists(userEmail) == true)
+		if(likeExists(userEmail) == true || pageExists() == false)
 			return false;
 
 		try {
