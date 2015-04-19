@@ -22,6 +22,8 @@ import com.google.appengine.api.datastore.Transaction;
 
 
 
+
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.Timestamp;
@@ -372,4 +374,38 @@ public class UserEntity
 			
 			return returnedUsers;
 		}
+
+	public static ArrayList<String> getFriends(String email2) 
+	{
+	
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		ArrayList<String >friends= new ArrayList<String >();
+		
+		Query gaeQuery = new Query("requests");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) {
+			
+			if ((entity.getProperty("from").toString().equals(email2)
+					|| entity.getProperty("to").toString().equals(email2) )
+					&& entity.getProperty("Acceptance").toString().equals("1") ) 
+			{
+
+				if(email2.equals(entity.getProperty("from").toString()))
+				{
+					friends.add(entity.getProperty("to").toString());
+					
+				}
+				if(email2.equals(entity.getProperty("to").toString()))
+				{
+					friends.add( entity.getProperty("from").toString());
+					
+				}
+			}
+		}
+				
+		return friends;
+
+	}
 }

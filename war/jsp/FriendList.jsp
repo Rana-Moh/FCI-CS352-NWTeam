@@ -29,7 +29,7 @@ Choose a friend to write to his/her timeline
 				<TD BGColor="white"><Font size="4"><I>
 				 <input
 							type="radio"  name="Email"
-							value="<%= PostController.friends1.get(i)  %>"
+							value="<%= PostController.friends1.get(i) %>"
 				 >
 
 					</I></Font></td>

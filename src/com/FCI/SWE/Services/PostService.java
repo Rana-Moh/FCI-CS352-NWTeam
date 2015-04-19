@@ -27,6 +27,8 @@ public class PostService
 		return Arrays.asList(e.split(", "));
 		
 	}
+	
+	
 	@POST
 	@Path("/fillCustomFriendPage")
 	public String msgService(@FormParam("Emails") String email)
@@ -45,7 +47,15 @@ public class PostService
 		return "response";
 		
 	}
-	
+	/**
+	 * this my timeline Post
+	 * @param postContent
+	 * @param writerEmail
+	 * @param privacy
+	 * @param postPlace
+	 * @param Feeling
+	 * @return
+	 */
 	
 	
 	@POST
@@ -69,10 +79,17 @@ public class PostService
 		creatpost.setNumOfSeens(0);
 		creatpost.setNumOfLikes(0);
 		creatpost.setFeeling(Feeling);
+		creatpost.setWhere("myTimeline");
 		
 		return creatpost.createPost();
 	}
-
+/**
+ * this is for a friendTimeline post
+ * @param content
+ * @param email
+ * @param Feelings
+ * @return
+ */
 	@POST
 	@Path("/CreatePost1")
 	public String createPostService1(
@@ -81,9 +98,48 @@ public class PostService
 			@FormParam("Feelings")String Feelings) {
 		PostEntity creatpost = new PostEntity();
 		JSONObject jsonObj = new JSONObject();
+		creatpost.setWhere("friendTimeline");
+		java.util.Date date = new java.util.Date();
+		Timestamp postTimestamp = new Timestamp(date.getTime());		
+		creatpost.setPostTimestamp(postTimestamp.toString());
 		String res=creatpost.createPost1(email, content, "",User.getCurrentActiveUser().getEmail(),Feelings);
 		jsonObj.put("response", res);
 		return jsonObj.toJSONString();
 	}
+
+	/**
+	 * this is page post
+	 * @param postContent
+	 * @param writerEmail
+	 * @param privacy
+	 * @param postPlace
+	 * @return
+	 */
+
+	@POST
+	@Path("/CreatePostPage")
+	public String createPostServicePage(
+			@FormParam("postContent") String postContent,
+			@FormParam("writerEmail") String writerEmail,
+			@FormParam("privacy") String privacy,
+			@FormParam("postPlace") String postPlace,
+			@FormParam("Feelings") String Feeling) {
+
+		
+		java.util.Date date = new java.util.Date();
+		Timestamp postTimestamp = new Timestamp(date.getTime());		
+		PostEntity creatpost = new PostEntity();
+		creatpost.setPostContent(postContent);
+		creatpost.setWriterEmail(writerEmail);
+		creatpost.setPrivacy(privacy);
+		creatpost.setPostPlace(postPlace);
+		creatpost.setPostTimestamp(postTimestamp.toString());
+		creatpost.setNumOfSeens(0);
+		creatpost.setNumOfLikes(0);
+		creatpost.setFeeling(Feeling);
+		creatpost.setWhere("page");
+		return creatpost.createPost();
+	}
+
 	
 }

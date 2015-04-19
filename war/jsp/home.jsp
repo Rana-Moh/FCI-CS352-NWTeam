@@ -59,7 +59,7 @@ h1{
 <a href="/social/postPlace/"  style="color:#0066FF;font-size:20px;">Choose place to post</a><br/><br>
 <a href="/social/page/"  style="color:#0066FF;font-size:20px;">Create a Page</a><br/><br>
 <a href="/social/pageSearch/"  style="color:#0066FF;font-size:20px;">Search for a Page</a><br/><br>
-
+<a href="/social/Hashtag/"  style="color:#0066FF;font-size:20px;">Search for a HashTag</a><br/><br>
 
 </body>
 </html>

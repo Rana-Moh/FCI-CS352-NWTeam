@@ -40,6 +40,8 @@ public class PostEntity
 	private String writerEmail;
 	Vector<String> postHashTags = new Vector<String>();
 	private static String postID;
+	private boolean flag = false;
+	private String Where;
 	
 	
 	
@@ -141,6 +143,10 @@ public class PostEntity
 		}
 
 	}
+	/**
+	 * this is page and mytimeline post
+	 * @return
+	 */
 
 	public String createPost() {
 
@@ -164,6 +170,7 @@ public class PostEntity
 			post.setProperty("privacy", privacy);
 			post.setProperty("time", postTimestamp);
 			post.setProperty("feeling", feeling);
+			post.setProperty("where", this.Where);
 			getPostsHashTags();
 			String hashVec = convertHashTagVecToStr();
 			post.setProperty("hashTags", hashVec);
@@ -190,7 +197,15 @@ public class PostEntity
 
 	}
 
-	
+/**
+ * this for a friend page post	
+ * @param placeEmail
+ * @param postContent
+ * @param privacy
+ * @param writer
+ * @param feelings
+ * @return
+ */
 	public String createPost1(String placeEmail, String postContent,
 			String privacy,String writer, String feelings) {
 		DatastoreService datastore = DatastoreServiceFactory
@@ -212,6 +227,8 @@ public class PostEntity
 		if(!postPlace.equals(writer))
 		{
 			this.privacy="both";
+			this.flag= true;
+			
 		}
 
 		try {
@@ -223,11 +240,12 @@ public class PostEntity
 			post.setProperty("seens", "0");
 			post.setProperty("postPlace", postPlace);
 			post.setProperty("privacy", this.privacy);
+			post.setProperty("where", this.Where);
 			getPostsHashTags();
 			String hashVec = convertHashTagVecToStr();
 			post.setProperty("hashTags", hashVec);
 			post.setProperty("feeling", feelings);
-			//post.setProperty("time", timpStampStr);
+			post.setProperty("time", postTimestamp);
 			datastore.put(post);
 			postID=Long.toString(post.getKey().getId());
 			//ID = Long.toString(post.getKey().getId());
@@ -242,6 +260,12 @@ public class PostEntity
 		for (int i = 0; i < postHashTags.size(); i++) {
 			addToIDAndHashTable(postID, postHashTags.get(i), i);
 			addToHashTagCountersTable(postID,postHashTags.get(i),i);
+			
+		}
+		if(this.flag==true)
+		{
+			addToCustomTableBoth(User.getCurrentActiveUser().getEmail(),postID);
+			addToCustomTableBoth(this.postPlace,postID);
 		}
 
 	
@@ -249,7 +273,29 @@ public class PostEntity
 
 	}
 	
-	  private void addToHashTagCountersTable(String postID2, String hashtag, int i) 
+	  private void addToCustomTableBoth(String email,String postID) 
+	{
+		  ArrayList<String>emails= new ArrayList<String>();
+		  
+		  emails=UserEntity.getFriends(email);
+		  for (int i = 0; i < emails.size(); i++) 
+		  {
+			  addToCustomTable(postID,emails.get(i), i);
+				
+		  }
+		  
+		  emails.clear();
+		  
+		  emails=UserEntity.getFriends(email);
+		  for (int i = 0; i < emails.size(); i++) 
+		  {
+			  // lw mwgod dont put it ! needs to implements
+			  addToCustomTable(postID,emails.get(i), i);
+				
+		  }
+				
+	}
+	private void addToHashTagCountersTable(String postID2, String hashtag, int i) 
 	  {
 		  boolean found=false;
 
@@ -388,6 +434,14 @@ public class PostEntity
 
 	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
+	}
+	
+	public String getWhere() {
+		return Where;
+	}
+
+	public void setWhere(String where) {
+		this.Where = where;
 	}
 
 

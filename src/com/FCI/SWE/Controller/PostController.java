@@ -102,7 +102,12 @@ public class PostController
 	}
 	
 
-//
+/**
+ * this a post on a friend profile
+ * @param content
+ * @param Feelings
+ * @return
+ */
 	@POST
 	@Path("/TimeLine1")
 	public String TimeLine(@FormParam("content") String content,
@@ -173,7 +178,13 @@ public class PostController
 
 	}
 	
-
+/**
+ * 
+ * this is for page post
+ * @param content
+ * @param privacy
+ * @return
+ */
 	@POST
 	@Path("/TimeLine11")
 	@Produces("text/html")
@@ -182,7 +193,7 @@ public class PostController
 			@FormParam("privacy") String privacy) {
 		System.out.println("page "+ pageName);
 		String writerEmail = User.getCurrentActiveUser().getEmail();
-		String serviceUrl = "http://localhost:8888/rest/CreatePost";
+		String serviceUrl = "http://localhost:8888/rest/CreatePostPage";
 		String urlParameters = "postContent=" + content + "&writerEmail="
 				+ pageNamecurr + "&privacy=" + privacy + "&postPlace="
 				+ pageNamecurr + "&Feelings=" + "";
@@ -201,7 +212,14 @@ public class PostController
 
 	}
 
-
+/**
+ * this is my TimeLine post
+ * @param postContent
+ * @param privacy
+ * @param postPlace
+ * @param Feeling
+ * @return
+ */
 
 	@POST
 	@Path("/AllPosts")
