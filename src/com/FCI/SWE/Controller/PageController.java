@@ -147,7 +147,7 @@ public class PageController {
 			if (object.get("Status").equals("OK"))
 				return "Page Liked Successfully.";
 			else if(object.get("Status").equals("Failed"))
-				return "This page is already liked.";
+				return "This page is already liked OR it doesn't exist.";
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
