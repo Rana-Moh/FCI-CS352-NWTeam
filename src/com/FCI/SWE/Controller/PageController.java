@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.FCI.SWE.Models.PostEntity;
 import com.FCI.SWE.Models.User;
 //import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.PageEntity;
@@ -156,5 +157,60 @@ public class PageController {
 
 		return null;
 	}
+	
+	  @POST
+	  @Path("/viewPage")
+	  public Response viewPage(@FormParam("pageNameView") String name){
+	    
+	    System.out.println("IN PAGE CONTROLLER /viewPage");
+	    
+	    String serviceUrl = "http://localhost:8888/rest/viewPageService/";
+	    String urlParameters = "userEmail=" + User.getCurrentActiveUser().getEmail() + "&pageNameView="+name;
+	    System.out.println("urlParameters: " + urlParameters);
+	    String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
+
+	    System.out.println("retJson" + retJson);
+	    
+	    Map <String, Vector<PostEntity>> passedPosts = new HashMap <String, Vector<PostEntity>> ();
+	    
+	    JSONParser parser = new JSONParser();
+	    //Object obj = new Object();
+	    
+	    try {
+	    		
+			JSONArray array = (JSONArray)parser.parse(retJson);
+			Vector <PostEntity> posts = new Vector <PostEntity> ();
+	      
+			String pageOwner = PageEntity.getPageOwner(name);
+	    	System.out.println("page owner: " + pageOwner);
+			
+			for(int i=0; i<array.size(); i++) {
+				JSONObject object;
+				
+				object = (JSONObject) array.get(i);
+				
+				posts.add(PostEntity.parsePostInfo(object.toJSONString()));
+			}
+			
+			System.out.println("posts found size: " + posts.size());
+			
+			passedPosts.put("postsList", posts);
+	      
+	      if (User.getCurrentActiveUser().getEmail().equals(pageOwner))
+	        return Response.ok(new Viewable("/jsp/viewPageAdmin" , passedPosts)).build();
+	      
+	      else if (!User.getCurrentActiveUser().getEmail().equals(pageOwner))
+	        return Response.ok(new Viewable("/jsp/viewPage", passedPosts)).build();
+	      
+	      else
+	        return null;
+
+	    } catch (ParseException e) {
+	      // TODO Auto-generated catch block
+	      e.printStackTrace();
+	    }
+
+	    return null;
+	  }
 	
 }

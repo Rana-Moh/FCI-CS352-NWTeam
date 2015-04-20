@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 
 import com.FCI.SWE.Models.GroupEntity;
 import com.FCI.SWE.Models.PageEntity;
+import com.FCI.SWE.Models.PostEntity;
 import com.FCI.SWE.Models.UserEntity;
 import com.google.appengine.labs.repackaged.org.json.JSONArray;
 
@@ -92,4 +93,28 @@ public class PageServices {
 		
 		return json.toJSONString();
 	}
+	
+	  @POST
+	  @Path("/viewPageService")
+	  public String viewPage(@FormParam("pageNameView") String pageName) {
+	    
+	    System.out.println("IN PAGE SERVICES /viewPageService");
+	    
+	    Vector <PostEntity> posts = PostEntity.viewPagePosts(pageName);
+	    
+	    JSONArray returnedJson = new JSONArray();
+	  
+	    for(PostEntity post: posts)
+	    {
+	      JSONObject object = new JSONObject();
+	      object.put("privacy", post.getPrivacy());
+	      object.put("content", post.getPostContent());
+	      object.put("time", post.getPostTimestamp());
+	      object.put("seens", post.getNumOfSeens());
+	      
+	      returnedJson.put(object);
+	    }
+
+	    return returnedJson.toString();
+	  }
 }
