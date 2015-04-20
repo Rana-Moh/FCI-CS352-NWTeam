@@ -27,15 +27,16 @@
   	<input type="submit" value="Like Page">
   	
   </form>
+  
+    <form action="/social/viewPage" method="post">
+  
+  	<p> Page Name : <input type="text" name="pageNameView" /> <br> </p>
+  	<input type="submit" value="View Page">
+  	
+  </form>
 
 </head>
 <body>
 
-<%
-
-
-
-
-%>
 </body>
 </html>

@@ -22,6 +22,8 @@ import com.google.appengine.api.datastore.Transaction;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.UserEntity;
 
@@ -475,5 +477,69 @@ public class PostEntity
 
 	public void setFeeling(String feeling) {
 		this.feeling = feeling;
+	}
+	
+	   public static Vector<PostEntity> viewPagePosts(String name) {
+		    // TODO Auto-generated method stub
+		   
+		   System.out.println("IN POST ENTITY /viewPagePosts");
+		      
+		    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		    Query gae = new Query("posts");
+		    PreparedQuery preparedQuery = datastore.prepare(gae);
+		    
+		    Vector <PostEntity> returnedPosts = new Vector <PostEntity> ();
+		    
+		    for(Entity entity : preparedQuery.asIterable()){
+		    	
+			      entity.getKey().getId();
+			      String where = entity.getProperty("where").toString();
+			      String pageOfPost = entity.getProperty("postPlace").toString();
+			      
+			      if(where.equals("page") && pageOfPost.equals(name)){
+			    	  
+			    	  	//System.out.println("IN LOOP");
+				        PostEntity post = new PostEntity();
+				        post.setPrivacy(entity.getProperty("privacy").toString());
+				        post.setPostContent(entity.getProperty("postContent").toString());
+				        System.out.println("found content: " + entity.getProperty("postContent").toString());
+				        post.setPostTimestamp(entity.getProperty("time").toString());
+				        String seens = entity.getProperty("seens").toString();
+				        int intseens = Integer.parseInt(seens);
+				        post.setNumOfSeens(intseens);
+				        
+				        returnedPosts.add(post);
+			      }
+		    }
+		    
+		    
+	    return returnedPosts;
+	   }
+	   
+	public static PostEntity parsePostInfo(String json) {
+		// TODO Auto-generated method stub
+		
+		JSONParser parser = new JSONParser();
+		PostEntity post = new PostEntity();
+		
+		try{
+			
+			JSONObject object = (JSONObject) parser.parse(json);
+			post.setPostContent(object.get("content").toString());
+			System.out.println("(parsing) POST CONTENT: " + object.get("content").toString());
+			post.setPrivacy(object.get("privacy").toString());
+			post.setPostTimestamp(object.get("time").toString());
+			
+			String seens = object.get("seens").toString();
+	        int intseens = Integer.parseInt(seens);
+	        post.setNumOfSeens(intseens);
+			
+			
+		} catch(ParseException e){
+			e.printStackTrace();
+		}
+		
+		return post;
+	
 	}
 }

@@ -124,7 +124,7 @@ public class PageEntity {
 		{
 			entity.getKey().getId();
 			String currentPageName = entity.getProperty("name").toString();
-			System.out.println("Page name = " + currentPageName);
+			//System.out.println("Page name = " + currentPageName);
 			if(currentPageName.contains(pageName))
 			{
 				PageEntity page = new PageEntity(entity.getProperty("name").toString(), 
@@ -253,6 +253,23 @@ public class PageEntity {
 				
 		return likers;
 	}
+	
+	  public static String getPageOwner(String pageName){
+		    
+		  System.out.println("IN PAGE ENTITY (getPageOwner)");
+		    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		    Query gaeQuery = new Query("pages");
+		    PreparedQuery pq = datastore.prepare(gaeQuery);
+		    
+		    for (Entity entity : pq.asIterable()) {
+		    	
+		      if (entity.getProperty("name").toString().equals(pageName)) 
+		        return entity.getProperty("owner").toString();
+		        
+		    }
+		        
+		    return null; 
+	  }
 
 
 }
