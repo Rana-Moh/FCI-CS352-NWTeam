@@ -52,7 +52,7 @@ h1{
 		
 			<h1 style="color:white" >Search Hashtags form</h1>
 			<div>
-			<input type="text" placeholder="email" required="" name="hashtag" /><br/><br/>
+			<input type="text" required="" name="hashtag" /><br/><br/>
 			</div>
 			
 			<div>

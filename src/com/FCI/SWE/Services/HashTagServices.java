@@ -45,6 +45,7 @@ public class HashTagServices
 			object.put("privacy", hashs.getPrivacy());
 			//email of user or page name where post exists
 			object.put("place1", hashs.getPostPlace());
+			object.put("id", hashs.getID());
 			
 			
 			returnedJson.put(object);

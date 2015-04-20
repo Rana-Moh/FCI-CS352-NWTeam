@@ -17,7 +17,7 @@ public class HashTagEntity
 {
 	public HashTagEntity(String feeling, String postContent, String postPlace,
 			int numOfLikes, String privacy, String postTimestamp,
-			String writerEmail, String where) {
+			String writerEmail, String where, String postid) {
 		super();
 		this.feeling = feeling;
 		this.postContent = postContent;
@@ -26,7 +26,8 @@ public class HashTagEntity
 		this.privacy = privacy;
 		this.postTimestamp = postTimestamp;
 		this.writerEmail = writerEmail;
-		Where = where;
+		this.where = where;
+		this.id=postid;
 	}
 
 	public HashTagEntity() {
@@ -40,7 +41,8 @@ public class HashTagEntity
     private String privacy;
 	private String postTimestamp;
 	private String writerEmail;
-	private String Where;
+	public String where;
+	private String id;
 	
 	public static Vector <HashTagEntity> search4Hashtags(String hashtag) 
 	{
@@ -56,12 +58,14 @@ public class HashTagEntity
 		{
 			entity.getKey().getId();
 			String currenthashtag = entity.getProperty("hashTag").toString();
-			String currentPostID = entity.getProperty("ID").toString();
+			String currentpostid = entity.getProperty("ID").toString();
+			//postid=entity.getProperty("postid").toString();
+
 			
 			if(currenthashtag.contains(hashtag))
 			{
 				HashTagEntity hash = new HashTagEntity();
-				hash=SearchPost(currentPostID);
+				hash=SearchPost(currentpostid);
 				//set el 7aga
 				if(entity.getProperty("privacy").toString().equals("public"))
 				{
@@ -70,14 +74,14 @@ public class HashTagEntity
 				
 				else if(entity.getProperty("privacy").toString().equals("both")||entity.getProperty("privacy").toString().equals("custom"))
 				{
-					if(checkPrivacy(currentPostID,User.getCurrentActiveUser().getEmail())|| CheckOwner(currentPostID))
+					if(checkPrivacy(currentpostid,User.getCurrentActiveUser().getEmail())|| CheckOwner(currentpostid))
 					{
 						returnedhashtags.add(hash);
 					}
 				}
 				else if(entity.getProperty("privacy").toString().equals("private"))
 				{
-					if(CheckOwner(currentPostID))
+					if(CheckOwner(currentpostid))
 					{
 						returnedhashtags.add(hash);
 					}
@@ -89,7 +93,7 @@ public class HashTagEntity
 		return returnedhashtags;
 
      }
-	private static boolean CheckOwner(String currentPostID) 
+	private static boolean CheckOwner(String currentpostid) 
 	{
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -99,7 +103,7 @@ public class HashTagEntity
 
 		for(Entity entity : pq.asIterable())
 		{
-			if(Long.toString(entity.getKey().getId()).equals(currentPostID))
+			if(Long.toString(entity.getKey().getId()).equals(currentpostid))
 			{
 				if(entity.getProperty("writerEmail").toString().equals(User.getCurrentActiveUser().getEmail()))
 				{
@@ -115,7 +119,7 @@ public class HashTagEntity
 	}
 
 	//
-	private static boolean checkPrivacy(String currentPostID, String email) 
+	private static boolean checkPrivacy(String currentpostid, String email) 
 	{
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
@@ -126,7 +130,7 @@ public class HashTagEntity
 		for(Entity entity : pq.asIterable())
 		{
 			if((entity.getProperty("friendEmail").toString().equals(email))&& 
-					(entity.getProperty("ID").toString().equals(currentPostID)))
+					(entity.getProperty("ID").toString().equals(currentpostid)))
 			{
 				return true;
 			}
@@ -134,7 +138,7 @@ public class HashTagEntity
 		return false;
 	}
 	
-	static HashTagEntity SearchPost(String ID)
+	static HashTagEntity SearchPost(String postid)
 	{
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		Query gae = new Query("posts");
@@ -143,7 +147,7 @@ public class HashTagEntity
 		//HashTagEntity hash= new HashTagEntity();
 		for(Entity entity : preparedQuery.asIterable())
 		{
-			if(Long.toString(entity.getKey().getId()).equals(ID))
+			if(Long.toString(entity.getKey().getId()).equals(postid))
 			{
 				HashTagEntity hash = new HashTagEntity(entity.getProperty("feeling").toString(),
 						entity.getProperty("postContent").toString(),
@@ -152,13 +156,19 @@ public class HashTagEntity
 						entity.getProperty("privacy").toString(),
 						entity.getProperty("time").toString(),
 						entity.getProperty("writerEmail").toString(),
-						entity.getProperty("where").toString());
+						entity.getProperty("where").toString(),
+						postid);
 				return hash;
 			}
 			
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public String toString(){
+		return "{" + id + "}";
 	}
 	
 public static HashTagEntity parseHashInfo(String json) 
@@ -187,14 +197,13 @@ public static HashTagEntity parseHashInfo(String json)
 			Hash.setPostPlace(object.get("place1").toString());
 			Hash.setNumOfLikes(Integer.parseInt(object.get("likes").toString()));
 			Hash.setPrivacy(object.get("privacy").toString());
+			Hash.setpostid(object.get("id").toString());
 			
 		} catch(ParseException e){
 			e.printStackTrace();
 		}
 		
 		return Hash;
-	
-	
 	
 }
 	
@@ -236,11 +245,11 @@ public static HashTagEntity parseHashInfo(String json)
 	}
 	
 	public String getWhere() {
-		return Where;
+		return where;
 	}
 
 	public void setWhere(String where) {
-		this.Where = where;
+		this.where = where;
 	}
 
 
@@ -265,9 +274,17 @@ public static HashTagEntity parseHashInfo(String json)
 	public String getFeeling() {
 		return feeling;
 	}
+	
+	public String getID() {
+		return id;
+	}
 
 	public void setFeeling(String feeling) {
 		this.feeling = feeling;
+	}
+	
+	public void setpostid(String postid) {
+		this.id = postid;
 	}
 	
 	

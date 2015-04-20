@@ -1,5 +1,6 @@
 package com.FCI.SWE.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -25,6 +26,9 @@ import com.FCI.SWE.Models.PageEntity;
 @Produces("text/html")
 public class HashTagController 
 {
+	
+	public static ArrayList <String>ids= new ArrayList<String>();
+	public static int count;
 	@GET
 	@Path("/Hashtag")
 	public Response searchHashtag() 
@@ -61,9 +65,20 @@ public class HashTagController
 			}
 			
 			System.out.println("hashtags found size: " + hash.size());
-			System.out.println(hash.get(0).getFeeling());
+			count=hash.size();
+			ids.clear();
+			for(int i =0 ;i<hash.size();i++)
+			{
+				ids.add(hash.get(i).getID());
+			}
+			
+			System.out.println(hash.get(0).getID());
+			System.out.println(hash.get(1).getID());
+			System.out.println(hash.get(2).getID());
+			
 			
 			passedhashtags.put("hashtagsList", hash);
+			System.out.println(passedhashtags.get("hashtagsList").get(0).getID());
 			return Response.ok(new Viewable("/jsp/showhashtags", passedhashtags)).build();
 			
 		} catch (ParseException e){
