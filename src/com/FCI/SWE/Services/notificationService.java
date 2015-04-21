@@ -72,7 +72,7 @@ public class notificationService
 		
 		
 	}
-	/*
+	
 	@GET
 	@Path("/dumby")
 	public String dumb()
@@ -81,7 +81,7 @@ public class notificationService
 		
 		return null;
 	}
-	*/
+	
 	@POST
 	@Path("/parseNotification")
 	public String notification(@FormParam("type") String type, @FormParam("parameters")String parameters)

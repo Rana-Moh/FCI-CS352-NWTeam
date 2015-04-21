@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<form action="/social/parseNotification" method="get">
+
 <table Border="3" BorderColor="black" width="500" cellSpacing="1"
 			CellPadding="3">
 
@@ -24,10 +24,10 @@
 				for (int i = 0; i < NotificationEntity.type.size(); i++) {
 			%>
 			<tr Align="Center">
-				
+				<form action="/social/parseNotification" method="get">
 				<td BGColor="white"><Font size="4"><I>
 				<input
-							type="radio"  name="type"
+							type="hidden"  name="type"
 							value="<%= NotificationEntity.type.get(i)%>"
 				 >
 				</TD>
@@ -42,6 +42,10 @@
                 %>
 
 					</I></Font></TD>
+					
+					
+		    <TD><I><input type="submit" value="see notification"></I></TD>
+	        </form>
 			</tr>
 			<%
 				}
@@ -49,8 +53,6 @@
 
 		</table>
 		<br/>
-		<input type="submit" value="see notification">
-	</form>
 
 
 

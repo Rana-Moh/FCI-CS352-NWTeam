@@ -150,15 +150,15 @@ public class notificationContoller
 				object1= PostEntity.getPost(object.get("id").toString());
 				who=object.get("who").toString();
 				content = object1.get("content").toString();
-				privacy=object.get("privacy").toString();
-				time=object.get("time").toString();
-				writer=object.get("writer").toString();
-				likes=object.get("likes").toString();
-				feelings=object.get("feelings").toString();	
-				place= object.get("where").toString();
+				privacy=object1.get("privacy").toString();
+				time=object1.get("time").toString();
+				writer=object1.get("writer").toString();
+				likes=object1.get("likes").toString();
+				feelings=object1.get("feelings").toString();	
+				place= object1.get("where").toString();
 				
 				
-				
+				System.out.println("in conr"+object1);
 				
 			    return Response.ok(new Viewable("/jsp/viewPost")).build();
 			}

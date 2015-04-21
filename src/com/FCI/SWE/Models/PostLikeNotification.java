@@ -51,7 +51,8 @@ INotificationTypes
 		JSONObject object = new JSONObject();
 		String resKey= stringToList(s);
 		String resKey2= getid(s);
-		System.out.println(resKey);		
+		System.out.println(resKey);
+		System.out.println("key 2 !"+resKey2);
 		object.put("who",resKey);
 		object.put("id",resKey2);
 		//get post and view id

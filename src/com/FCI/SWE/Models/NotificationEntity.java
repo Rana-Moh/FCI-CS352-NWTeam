@@ -79,6 +79,7 @@ public class NotificationEntity
 
 		INotificationTypes temp=null;
 		String S= selectCommand(Type);
+		System.out.print("in get command "+S);
 		try
 		{
 			temp=(INotificationTypes)Class.forName("com.FCI.SWE.Models."+S).newInstance();
@@ -117,7 +118,7 @@ public class NotificationEntity
 	}
 
 
-/*
+
 	public static void insertdumb() 
 	{
 		DatastoreService datastore = DatastoreServiceFactory
@@ -147,7 +148,7 @@ public class NotificationEntity
 		con11.setProperty("Type","FriendRequestNotification");
 		con11.setProperty("class", "SelectionOfFriendRequestNotification");
 		datastore.put(con11);
-		
+		*/
 		Query gaeQuery111 = new Query("Map");
 		PreparedQuery pq111 = datastore.prepare(gaeQuery111);
 		List<Entity> list111 = pq111.asList(FetchOptions.Builder.withDefaults());
@@ -161,7 +162,7 @@ public class NotificationEntity
 		
 		
 	}
-*/
+
 
 	
 

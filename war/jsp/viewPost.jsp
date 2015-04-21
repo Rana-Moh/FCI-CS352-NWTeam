@@ -11,11 +11,29 @@
 
 <%
 	out.println("this person like ur post : "+notificationContoller.who);
+	out.println();
+%>
+<br>
+<%	
 	out.println("ur post type: "+notificationContoller.type);
+%>
+<br>
+<%
 	out.println("ur post content : "+notificationContoller.content);
-	out.println("feeling : "+notificationContoller.feelings);
+%>
+<br>
+<% 	out.println("feeling : "+notificationContoller.feelings);
+%>
+<br>
+<%	
 	out.println("ur post time : "+notificationContoller.time);
+%>
+<br>
+<%	
 	out.println("ur post place : "+notificationContoller.place);
+%>
+<br>
+<%
 	out.println("ur post privacy : "+notificationContoller.privacy);
 %>
 

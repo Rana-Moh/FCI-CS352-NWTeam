@@ -555,7 +555,7 @@ public class PostEntity
 		{
 			if (Long.toString(entity.getKey().getId()).equals(id))	 
 			{
-				
+				System.out.println("in get post !");
 				object.put("content",entity.getProperty("postContent"));
 				object.put("writer",entity.getProperty("writerEmail"));
 				object.put("likes",entity.getProperty("likes"));
@@ -566,6 +566,9 @@ public class PostEntity
 				object.put("hashtags",entity.getProperty("hashTags"));
 				object.put("feelings",entity.getProperty("feeling"));
 				object.put("time",entity.getProperty("time"));
+				
+				System.out.println(object.get("privacy").toString());
+				System.out.println(object);
 				
 				
 			}
