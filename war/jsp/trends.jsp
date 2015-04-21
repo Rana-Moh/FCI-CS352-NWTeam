@@ -13,13 +13,13 @@
 out.print(HashTagTrendsController.trend.size()-1);
 %>
 <%
-for(int i =0; i<HashTagTrendsController.trend.size(); i++)
+for(int i =0; i<HashTagTrendsController.trend.size()&& i<10 ; i++)
 {
 	
 %>
 <input type="radio" name="hashtag" value='<%= HashTagTrendsController.trend.get(i)%>'>
 <%	
-		out.print(HashTagTrendsController.trend.get(HashTagTrendsController.trend.size()-1-i)+ " ");
+		out.print(HashTagTrendsController.trend.get(i)+ " ");
 		out.println("  ------  ");
 %>
 

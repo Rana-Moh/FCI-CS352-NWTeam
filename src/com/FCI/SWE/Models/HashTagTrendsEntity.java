@@ -41,6 +41,8 @@ public class HashTagTrendsEntity
 		System.out.println(map);
 		ArrayList<String>top= new ArrayList<String>();
 		top=getTop10(map);
+		Collections.reverse(top);
+		
 		System.out.println(top);
 		
 		return top;
@@ -51,17 +53,17 @@ public class HashTagTrendsEntity
 	{
 		ArrayList<String>top= new ArrayList<String>();
 		Iterator<Entry<String, String>> i = map.entrySet().iterator(); 
-		int count=0;
+		//int count=0;
 		while(i.hasNext())
 		{
-			count++;
+			//count++;
 			String key = i.next().getKey();
 			top.add(key);
 			
-			if(count==10)
-			{
-				return top;
-			}
+			//if(count==10)
+			//{
+				//return top;
+			//}
 			
 		}
 		return top;
