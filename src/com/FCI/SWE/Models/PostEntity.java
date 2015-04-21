@@ -542,4 +542,34 @@ public class PostEntity
 		return post;
 	
 	}
+	
+	
+	public static JSONObject getPost(String id)
+	{
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		JSONObject object = new JSONObject();
+		Query gaeQuery = new Query("posts");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) 
+		{
+			if (Long.toString(entity.getKey().getId()).equals(id))	 
+			{
+				
+				object.put("content",entity.getProperty("postContent"));
+				object.put("writer",entity.getProperty("writerEmail"));
+				object.put("likes",entity.getProperty("likes"));
+				object.put("seen",entity.getProperty("seens"));
+				object.put("where",entity.getProperty("postPlace"));
+				object.put("privacy",entity.getProperty("privacy"));
+				object.put("type",entity.getProperty("where"));
+				object.put("hashtags",entity.getProperty("hashTags"));
+				object.put("feelings",entity.getProperty("feeling"));
+				object.put("time",entity.getProperty("time"));
+				
+				
+			}
+		}
+		return object;
+	}
 }

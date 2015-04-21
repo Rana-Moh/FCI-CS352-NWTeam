@@ -1,11 +1,9 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
 <title>Insert title here</title>
 <style>
-
 .button
 {
     width:90px;
@@ -24,12 +22,10 @@ body
 }
 p 
 {
-
     font-size: 1em;
     color:#FF3399;
     font-weight: bold;
 }
-
 h1{ 
     display: block;
     font-size: 2em;
@@ -60,6 +56,7 @@ h1{
 <a href="/social/page/"  style="color:#0066FF;font-size:20px;">Create a Page</a><br/><br>
 <a href="/social/pageSearch/"  style="color:#0066FF;font-size:20px;">Search for a Page</a><br/><br>
 <a href="/social/Hashtag/"  style="color:#0066FF;font-size:20px;">Search for a HashTag</a><br/><br>
+<a href="/social/trends/"  style="color:#0066FF;font-size:20px;">HashTag Trends</a><br/><br>
 
 </body>
 </html>

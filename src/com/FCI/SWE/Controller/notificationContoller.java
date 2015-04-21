@@ -30,6 +30,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.MsgEntity;
+import com.FCI.SWE.Models.PostEntity;
 import com.FCI.SWE.Models.User;
 //import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.UserEntity;
@@ -53,6 +54,15 @@ public class notificationContoller
 {
 	
 	public static String accepted;
+	public static String who;
+	public static String content;
+	public static String likes;
+	public static String time;
+	public static String writer;
+	public static String type;
+	public static String privacy;
+	public static String feelings;
+	public static String place;
 	/*@GET
 	@Path("/viewN")
 	public Response viewN()
@@ -132,6 +142,25 @@ public class notificationContoller
 					return Response.ok(new Viewable("/jsp/viewConversation")).build();
 				}
 				
+			}
+			
+			else if(type.equals("postLike"))
+			{
+				JSONObject object1 = new JSONObject();
+				object1= PostEntity.getPost(object.get("id").toString());
+				who=object.get("who").toString();
+				content = object1.get("content").toString();
+				privacy=object.get("privacy").toString();
+				time=object.get("time").toString();
+				writer=object.get("writer").toString();
+				likes=object.get("likes").toString();
+				feelings=object.get("feelings").toString();	
+				place= object.get("where").toString();
+				
+				
+				
+				
+			    return Response.ok(new Viewable("/jsp/viewPost")).build();
 			}
 			
 			

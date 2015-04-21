@@ -89,7 +89,7 @@ public class HashTagEntity
 				
 			}
 		}
-		System.out.print("hash "+returnedhashtags.get(0).getPostContent());
+		//System.out.print("hash "+returnedhashtags.get(0).getPostContent());
 		return returnedhashtags;
 
      }
@@ -180,7 +180,7 @@ public static HashTagEntity parseHashInfo(String json)
 		try{
 			
 			JSONObject object = (JSONObject) parser.parse(json);
-			System.out.println("in parsing writer "+object.get("writer").toString());
+		//	System.out.println("in parsing writer "+object.get("writer").toString());
 			Hash.setWriterEmail(object.get("writer").toString());
 			Hash.setWhere(object.get("place").toString());
 			
@@ -190,8 +190,8 @@ public static HashTagEntity parseHashInfo(String json)
 			}
 			else
 				Hash.setFeeling("there is no feelings in page posts");
-			System.out.println("in parsing feeling "+object.get("feelings").toString());
-			System.out.println("hash is "+ Hash.getFeeling());
+			//System.out.println("in parsing feeling "+object.get("feelings").toString());
+			//System.out.println("hash is "+ Hash.getFeeling());
 			Hash.setPostContent(object.get("content").toString());
 			Hash.setPostTimestamp(object.get("time").toString());
 			Hash.setPostPlace(object.get("place1").toString());

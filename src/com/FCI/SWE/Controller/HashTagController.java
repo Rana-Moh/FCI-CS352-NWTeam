@@ -19,6 +19,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.HashTagEntity;
+import com.FCI.SWE.Models.NotificationEntity;
 import com.FCI.SWE.Models.PageEntity;
 
 
@@ -29,6 +30,14 @@ public class HashTagController
 	
 	public static ArrayList <String>ids= new ArrayList<String>();
 	public static int count;
+	/*
+	@GET
+	@Path("/ref")
+	public void reflect()
+	{
+		NotificationEntity.insertdumb();
+	}*/
+	
 	@GET
 	@Path("/Hashtag")
 	public Response searchHashtag() 
@@ -41,7 +50,7 @@ public class HashTagController
 	@Path("/searchHashtag")
 	public Response search(@FormParam("hashtag") String hashtag)
 	{
-		
+		System.out.print("here !"+ hashtag);
 
 		String serviceUrl = "http://localhost:8888/rest/Search4HashTag/";
 		String urlParameters = "name="+hashtag;
@@ -72,13 +81,9 @@ public class HashTagController
 				ids.add(hash.get(i).getID());
 			}
 			
-			System.out.println(hash.get(0).getID());
-			System.out.println(hash.get(1).getID());
-			System.out.println(hash.get(2).getID());
-			
 			
 			passedhashtags.put("hashtagsList", hash);
-			System.out.println(passedhashtags.get("hashtagsList").get(0).getID());
+			
 			return Response.ok(new Viewable("/jsp/showhashtags", passedhashtags)).build();
 			
 		} catch (ParseException e){

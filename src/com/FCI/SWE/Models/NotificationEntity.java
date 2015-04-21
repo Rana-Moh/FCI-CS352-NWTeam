@@ -65,8 +65,10 @@ public class NotificationEntity
 				type.add(entity.getProperty("type").toString());
 				parameters.add(entity.getProperty("parameters").toString());
 				
+				
 			}
 		}
+		System.out.println("recivers"+parameters);
 
 		return null;
 	}
@@ -120,7 +122,7 @@ public class NotificationEntity
 	{
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
-		
+/*		
 		Query gaeQuery = new Query("Map");
 		PreparedQuery pq = datastore.prepare(gaeQuery);
 		List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
@@ -129,7 +131,6 @@ public class NotificationEntity
 		con.setProperty("Type","msg");
 		con.setProperty("class", "SelectiondOfConversationMessageNotification");
 		datastore.put(con);
-
 		Query gaeQuery1 = new Query("Map");
 		PreparedQuery pq1 = datastore.prepare(gaeQuery1);
 		List<Entity> list1 = pq1.asList(FetchOptions.Builder.withDefaults());
@@ -138,18 +139,25 @@ public class NotificationEntity
 		con1.setProperty("Type","FriendAcceptanceNotification");
 		con1.setProperty("class", "SelectionOfAcceptanceNotification");
 		datastore.put(con1);
-
 		Query gaeQuery11 = new Query("Map");
 		PreparedQuery pq11 = datastore.prepare(gaeQuery11);
 		List<Entity> list11 = pq11.asList(FetchOptions.Builder.withDefaults());
 		
 		Entity con11= new Entity("Map", list11.size()+1);
-		con1.setProperty("Type","FriendRequestNotification");
-		con1.setProperty("class", "SelectionOfFriendRequestNotification");
+		con11.setProperty("Type","FriendRequestNotification");
+		con11.setProperty("class", "SelectionOfFriendRequestNotification");
 		datastore.put(con11);
 		
+		Query gaeQuery111 = new Query("Map");
+		PreparedQuery pq111 = datastore.prepare(gaeQuery111);
+		List<Entity> list111 = pq111.asList(FetchOptions.Builder.withDefaults());
+		
+		Entity con111= new Entity("Map", list111.size()+1);
+		con111.setProperty("Type","postLike");
+		con111.setProperty("class", "PostLikeNotification");
+		datastore.put(con111);
+		
 		System.out.println("nnn");
-
 		
 		
 	}
