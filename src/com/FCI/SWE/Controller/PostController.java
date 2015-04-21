@@ -84,15 +84,6 @@ public class PostController
 
 		
 	}
-	@GET
-	@Path("/createPostPage")
-	public Response createPostPage1(@QueryParam("Email")String email)
-	{
-		pageNamecurr=email;
-		return Response.ok(new Viewable("/jsp/createPostPage")).build();
-
-		
-	}
 
 	@GET
 	@Path("/postPlace")
@@ -144,16 +135,6 @@ public class PostController
 		return Response.ok(new Viewable("/jsp/FriendList")).build();		
 		
 	}
-	@GET
-	@Path("/PostOnPage")
-	public Response getpages()
-	{
-		
-		pageName=PostEntity.pages();
-		
-		return Response.ok(new Viewable("/jsp/PostOnPage")).build();		
-		
-	}
 	
 	@POST
 	@Path("/AllPosts1")
@@ -177,41 +158,6 @@ public class PostController
 		return Response.ok(new Viewable("/jsp/TimeLine")).build();
 
 	}
-	
-/**
- * 
- * this is for page post
- * @param content
- * @param privacy
- * @return
- */
-	@POST
-	@Path("/TimeLine11")
-	@Produces("text/html")
-	// @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response response1(@FormParam("content") String content,
-			@FormParam("privacy") String privacy) {
-		System.out.println("page "+ pageName);
-		String writerEmail = User.getCurrentActiveUser().getEmail();
-		String serviceUrl = "http://localhost:8888/rest/CreatePostPage";
-		String urlParameters = "postContent=" + content + "&writerEmail="
-				+ pageNamecurr + "&privacy=" + privacy + "&postPlace="
-				+ pageNamecurr + "&Feelings=" + "";
-		String result = Connection.connect(serviceUrl, urlParameters, "POST",
-				"application/x-www-form-urlencoded;charset=UTF-8");
-
-		if (privacy.equals("custom") && result.equals("postCreated")) 
-		{
-			Pagelikers= PageEntity.getLikers(pageNamecurr);
-			return Response.ok(new Viewable("/jsp/customlikers", "")).build();
-		}
-
-		if (result.equals("postCreated"))
-			return Response.ok(new Viewable("/jsp/AllPosts", "")).build();
-		return Response.ok(new Viewable("/jsp/createPost", "")).build();
-
-	}
-
 /**
  * this is my TimeLine post
  * @param postContent

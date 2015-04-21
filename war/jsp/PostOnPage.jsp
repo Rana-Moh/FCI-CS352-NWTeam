@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=windows-1256"
 	pageEncoding="windows-1256"%>
-<%@ page import="com.FCI.SWE.Controller.PostController"%>
+<%@ page import="com.FCI.SWE.Controller.PagePostController"%>
 <%@ page import ="java.util.ArrayList" %>
 <%@ taglib prefix="c" 
 		uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,19 +23,19 @@ Choose a page to write post
 			</TR>
 
 			<%
-				for (int i = 0; i < PostController.pageName.size(); i++) {
+				for (int i = 0; i < PagePostController.pageName.size(); i++) {
 			%>
 			<tr Align="Center">
 				<TD BGColor="white"><Font size="4"><I>
 				 <input
 							type="radio"  name="Email"
-							value="<%= PostController.pageName.get(i)  %>"
+							value="<%= PagePostController.pageName.get(i)  %>"
 				 >
 
 					</I></Font></td>
 
 				<td BGColor="white"><Font-size="4"><I> <%
- 	out.println(PostController.pageName.get(i));
+ 	out.println(PagePostController.pageName.get(i));
  %>
 
 					</I></Font></TD>
