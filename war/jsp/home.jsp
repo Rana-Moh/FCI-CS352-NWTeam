@@ -60,7 +60,7 @@ h1{
 
 
 <a href="/social/viewMyTimeline/"  style="color:#0066FF;font-size:20px;">myTimeLine</a><br/><br>
-
+<a href="/social/viewMyNewsFeed/"  style="color:#0066FF;font-size:20px;">my News Feed</a><br/><br>
 
 
 </body>

@@ -119,6 +119,7 @@ public class HashTagEntity
 	}
 
 	//
+	
 	private static boolean checkPrivacy(String currentpostid, String email) 
 	{
 		DatastoreService datastore = DatastoreServiceFactory
