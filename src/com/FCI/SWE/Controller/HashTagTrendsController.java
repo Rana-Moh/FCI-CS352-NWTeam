@@ -36,9 +36,10 @@ public class HashTagTrendsController
 	public Response getTrends()
 	{
 		//get trends lw das 3ala 2y wa7da go to search4astags!
-		trend=HashTagTrendsEntity.getTrends();
-		System.out.println(trend);
-		
+		String serviceUrl = "http://localhost:8888/rest/trends/";
+		String urlParameters ="";
+		String retJson = Connection.connect(serviceUrl, urlParameters, "POST", "application/x-www-form-urlencoded;charset=UTF-8");
+
 		return Response.ok(new Viewable("/jsp/trends")).build();
 	}
 
