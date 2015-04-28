@@ -97,7 +97,6 @@ public class PostController
  * this a post on a friend profile
  * @param content
  * @param Feelings
- * @return
  */
 	@POST
 	@Path("/TimeLine1")
@@ -164,7 +163,6 @@ public class PostController
  * @param privacy
  * @param postPlace
  * @param Feeling
- * @return
  */
 
 	@POST

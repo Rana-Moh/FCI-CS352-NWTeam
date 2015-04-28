@@ -83,7 +83,6 @@ public class PagePostController
  * this is for page post
  * @param content
  * @param privacy
- * @return
  */
 	@POST
 	@Path("/TimeLine11")

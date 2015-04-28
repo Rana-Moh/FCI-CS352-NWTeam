@@ -54,7 +54,6 @@ public class PostService
 	 * @param privacy
 	 * @param postPlace
 	 * @param Feeling
-	 * @return
 	 */
 	
 	
@@ -88,7 +87,6 @@ public class PostService
  * @param content
  * @param email
  * @param Feelings
- * @return
  */
 	@POST
 	@Path("/CreatePost1")

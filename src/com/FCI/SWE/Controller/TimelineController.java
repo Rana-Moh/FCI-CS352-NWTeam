@@ -53,7 +53,7 @@ public class TimelineController
 				
 				object = (JSONObject) array.get(i);
 				
-				timeline.add(TimelineEntity.parseHashInfo(object.toJSONString()));
+				timeline.add(TimelineEntity.h(object.toJSONString()));
 			}
 			
 			System.out.println("hashtags found size: " + timeline.size());

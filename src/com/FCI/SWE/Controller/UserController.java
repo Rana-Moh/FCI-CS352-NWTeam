@@ -176,8 +176,6 @@ public class UserController {
 	 * controller part, it will calls login service to check user data and get
 	 * user from datastore
 	 * 
-	 * @param uname
-	 *            provided user name
 	 * @param pass
 	 *            provided user password
 	 * @return Home page view

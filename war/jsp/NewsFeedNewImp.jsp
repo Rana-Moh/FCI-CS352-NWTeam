@@ -27,7 +27,7 @@
 		<%
 			counter++;
 		%>
-
+	
 		<p>
 			type of post:
 			<c:out value="${timeline.where}"></c:out>
@@ -62,16 +62,19 @@
 		</p>
 		
 		
-		
 		<form action="/social/postLike" method="post">
 			<input type="hidden" value=" <%=counter%>" name="counter">
+			
 			<input type="submit" value="like post">
-
-			<p>__________________________________________________________</p>
+			
 		</form>
 		
-		
-		
+		<form action="/social/sharePost" method="post">
+			<input type="hidden" value=" <%=counter %>" name="counter">
+			
+			<input type="submit" value="like post">
+			<p>__________________________________________________________</p>
+		</form>
 		<br>
 		<br>
 	</c:forEach>

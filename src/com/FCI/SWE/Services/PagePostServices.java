@@ -31,7 +31,6 @@ public class PagePostServices
 	 * @param writerEmail
 	 * @param privacy
 	 * @param postPlace
-	 * @return
 	 */
 
 	@POST

@@ -147,7 +147,6 @@ public class PostEntity
 	}
 	/**
 	 * this is page and mytimeline post
-	 * @return
 	 */
 
 	public String createPost() {
@@ -206,7 +205,6 @@ public class PostEntity
  * @param privacy
  * @param writer
  * @param feelings
- * @return
  */
 	public String createPost1(String placeEmail, String postContent,
 			String privacy,String writer, String feelings) {

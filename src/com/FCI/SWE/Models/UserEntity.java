@@ -88,8 +88,6 @@ public class UserEntity
 	 * This static method will form UserEntity class using user name and
 	 * password This method will serach for user in datastore
 	 * 
-	 * @param name
-	 *            user name
 	 * @param pass
 	 *            user password
 	 * @return Constructed user entity
