@@ -22,8 +22,11 @@ import com.google.appengine.api.datastore.Transaction;
 
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.Timestamp;
@@ -83,6 +86,7 @@ public class UserEntity
 	}
 
 	
+<<<<<<< HEAD
 	/**
 	 * 
 	 * This static method will form UserEntity class using user name and
@@ -111,6 +115,23 @@ public class UserEntity
 				
 				returnedUser.setId(entity.getKey().getId());
 				
+=======
+	
+
+	public static UserEntity getUser(String email, String pass) {
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+
+		Query gaeQuery = new Query("users");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		for (Entity entity : pq.asIterable()) {
+			if (entity.getProperty("email").toString().equals(email)
+					&& entity.getProperty("password").toString().equals(pass)) {
+				UserEntity returnedUser = new UserEntity(entity.getProperty(
+						"name").toString(), entity.getProperty("email")
+						.toString(), entity.getProperty("password").toString());
+				returnedUser.setId(entity.getKey().getId());
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 				return returnedUser;
 			}
 		}
@@ -232,9 +253,15 @@ public class UserEntity
 	public static boolean checkAcceptTable(String myEmail, String femail) {
 		DatastoreService datastore = DatastoreServiceFactory
 				.getDatastoreService();
+<<<<<<< HEAD
 
 		Query gaeQuery = new Query("requests");
 		PreparedQuery pq = datastore.prepare(gaeQuery);
+=======
+		Query gaeQuery = new Query("requests");
+		PreparedQuery pq = datastore.prepare(gaeQuery);
+		
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		for (Entity entity : pq.asIterable()) {
 			
 			if (entity.getProperty("from").toString().equals(femail)
@@ -343,7 +370,11 @@ public class UserEntity
 
 	}
 
+<<<<<<< HEAD
 	public static Vector <UserEntity> searchUser(String uname) {
+=======
+	public static Vector<UserEntity> searchUser(String uname) {
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			// TODO Auto-generated method stub
 			
 			DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -372,6 +403,7 @@ public class UserEntity
 			
 			return returnedUsers;
 		}
+<<<<<<< HEAD
 
 	public static ArrayList<String> getFriends(String email2) 
 	{
@@ -406,4 +438,6 @@ public class UserEntity
 		return friends;
 
 	}
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 }

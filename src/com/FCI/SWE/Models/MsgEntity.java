@@ -26,6 +26,7 @@ import java.io.StringWriter;
 import java.sql.Timestamp;
 import java.util.Date;
  
+<<<<<<< HEAD
 
 /**
  * <h1>User Entity class</h1>
@@ -38,6 +39,8 @@ import java.util.Date;
  * @since 2014-02-12
  */
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 public class MsgEntity 
 {
 	public static String currentActionCon;
@@ -257,8 +260,13 @@ public class MsgEntity
 			recievers=getreciveres(cname,email);
 			
 			Query gaeQuery1 = new Query("Notification");
+<<<<<<< HEAD
 			PreparedQuery pq1 = datastore.prepare(gaeQuery1);
 			List<Entity> list1 = pq1.asList(FetchOptions.Builder.withDefaults());
+=======
+			PreparedQuery pq1 = datastore.prepare(gaeQuery);
+			List<Entity> list1 = pq.asList(FetchOptions.Builder.withDefaults());
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			
 			
 			

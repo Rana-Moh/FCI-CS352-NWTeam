@@ -93,6 +93,10 @@ public class Service {
 	 * Login Rest Service, this service will be called to make login process
 	 * also will check user data and returns new user from datastore
 	 * 
+<<<<<<< HEAD
+=======
+	 * 
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	 * @param pass
 	 *            provided user password
 	 * @return user in json format
@@ -176,6 +180,7 @@ public class Service {
 		
 	}	
 	
+<<<<<<< HEAD
 	/**
 	 * Search Rest service, this service will be called to search for a user that's
 	 * in the data store
@@ -191,6 +196,14 @@ public class Service {
 		
 		Vector <UserEntity> users = UserEntity.searchUser(s);
 		
+=======
+	@POST
+	@Path("/SearchService")
+	public String search(@FormParam("uname") String s){
+		System.out.println(s);
+		System.out.println("fel services "+ s);
+		Vector <UserEntity> users = UserEntity.searchUser(s);
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		JSONArray returnedJson = new JSONArray();
 	
 		for(UserEntity user: users)

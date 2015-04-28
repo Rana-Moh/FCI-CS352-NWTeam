@@ -14,7 +14,11 @@ import org.json.simple.parser.ParseException;
 
 import com.FCI.SWE.Models.User;
 
+<<<<<<< HEAD
 @Path("/")
+=======
+@Path("/Group")
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 @Produces("text/html")
 public class GroupController {
 
@@ -35,7 +39,11 @@ public class GroupController {
 		
 		System.out.println("in CreateGroup in GroupController");
 
+<<<<<<< HEAD
 		String serviceUrl = "http://localhost:8888/rest/CreateGroupService";
+=======
+		String serviceUrl = "http://fci-swe-apps.appspot.com/rest/CreateGroupService";
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		String urlParameters = "user_id=" + User.getCurrentActiveUser().getId()
 				+ "&name=" + name + "&desc=" + desc + "&privacy=" + privacy;
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",

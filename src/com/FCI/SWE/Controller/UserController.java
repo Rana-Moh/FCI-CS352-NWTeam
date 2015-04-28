@@ -171,6 +171,7 @@ public class UserController {
 		return "Failed";
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Action function to response to login request. This function will act as a
 	 * controller part, it will calls login service to check user data and get
@@ -180,6 +181,9 @@ public class UserController {
 	 *            provided user password
 	 * @return Home page view
 	 */
+=======
+	
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	@POST
 	@Path("/home")
 	@Produces("text/html")

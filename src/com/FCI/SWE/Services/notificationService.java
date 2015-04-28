@@ -73,6 +73,7 @@ public class notificationService
 		
 	}
 	
+<<<<<<< HEAD
 	@GET
 	@Path("/dumby")
 	public String dumb()
@@ -107,6 +108,24 @@ public class notificationService
 		*/
 		
 		String newN = temp.viewNotication(parameters);
+=======
+	
+	@GET
+	@Path("/parseNotification")
+	public String notification(@QueryParam("type") String type, @QueryParam("paramters")String paramters)
+	{
+		INotificationTypes temp =null;
+		
+		//temp=temp.getNotification(type);
+		if(type=="msg")
+			temp=new SelectiondOfConversationMessageNotification();
+		if(type=="FriendRequestNotification")
+			temp=new SelectionOfFriendRequestNotification();
+		if(type=="FriendAcceptanceNotification")
+			temp= new SelectionOfAcceptanceNotification();
+		
+		String newN = temp.viewNotication(paramters);
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		
 		
 		

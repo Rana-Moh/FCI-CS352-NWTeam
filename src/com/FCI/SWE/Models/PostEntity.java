@@ -1,5 +1,6 @@
 package com.FCI.SWE.Models;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -12,6 +13,11 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.google.appengine.labs.repackaged.org.json.JSONArray;
+=======
+import java.util.List;
+import java.util.Vector;
+
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -19,6 +25,7 @@ import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Transaction;
+<<<<<<< HEAD
 
 import org.glassfish.jersey.server.mvc.Viewable;
 import org.json.simple.JSONObject;
@@ -89,22 +96,55 @@ public class PostEntity
 		String[] postWords = postContent.split(" ");
 		for (int i = 0; i < postWords.length; i++) {
 			System.out.println("wordwordwordword   ");
+=======
+import com.google.appengine.labs.repackaged.org.json.JSONArray;
+import org.json.simple.JSONObject;
+
+public class PostEntity {
+
+	private String feeling;
+	private String postContent;
+	private String postPlace;
+	private int numOfLikes;
+	private int numOfSeens;
+	private String privacy;
+	private String postTimestamp;
+	private String writerEmail;
+	Vector<String> postHashTags = new Vector<String>();
+
+	public Vector<String> getPostsHashTags() {
+		String[] postWords = postContent.split(" ");
+		for (int i = 0; i < postWords.length; i++) {
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			if (postWords[i].charAt(0) == '#') {
 				postHashTags.add(postWords[i]);
 			}
 		}
+<<<<<<< HEAD
 		System.out.println("!!!!!!!!!!!!!!!   " + postHashTags.toString());
+=======
+		System.out.println("!!!!!!!!!!!!!!!   "+postHashTags.toString());
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		return postHashTags;
 	}
 
 	public String convertHashTagVecToStr() {
 
+<<<<<<< HEAD
 		// String result = "";
 		// for (int i = 0; i < postHashTags.size(); i++) {
 		// result += (postHashTags.get(i)+"+");
 		//
 		// }
 		// return result;
+=======
+//		String result = "";
+//		for (int i = 0; i < postHashTags.size(); i++) {
+//			result += (postHashTags.get(i)+"+");
+//		
+//		}
+//		return result;
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		JSONArray returnedJson = new JSONArray();
 		JSONObject obj = new JSONObject();
 		for (int i = 0; i < postHashTags.size(); i++) {
@@ -113,6 +153,7 @@ public class PostEntity
 			returnedJson.put(obj);
 		}
 		return returnedJson.toString();
+<<<<<<< HEAD
 
 	}
 
@@ -148,6 +189,11 @@ public class PostEntity
 	/**
 	 * this is page and mytimeline post
 	 */
+=======
+		
+		
+	}
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 	public String createPost() {
 
@@ -159,9 +205,13 @@ public class PostEntity
 
 		List<Entity> list = pq.asList(FetchOptions.Builder.withDefaults());
 
+<<<<<<< HEAD
 		String ID = "";
 		try {
 
+=======
+		try {
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			Entity post = new Entity("posts", list.size() + 1);
 			post.setProperty("postContent", postContent);
 			post.setProperty("writerEmail", writerEmail);
@@ -171,17 +221,24 @@ public class PostEntity
 			post.setProperty("privacy", privacy);
 			post.setProperty("time", postTimestamp);
 			post.setProperty("feeling", feeling);
+<<<<<<< HEAD
 			post.setProperty("where", this.Where);
+=======
+			
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			getPostsHashTags();
 			String hashVec = convertHashTagVecToStr();
 			post.setProperty("hashTags", hashVec);
 			datastore.put(post);
+<<<<<<< HEAD
 			postID=Long.toString(post.getKey().getId());
             
 			
 			ID = Long.toString(post.getKey().getId());
 
 			System.out.println("++++=======================   " + ID);
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			txn.commit();
 		} finally {
 			if (txn.isActive()) {
@@ -189,15 +246,19 @@ public class PostEntity
 			}
 		}
 
+<<<<<<< HEAD
 		for (int i = 0; i < postHashTags.size(); i++) {
 			addToIDAndHashTable(ID, postHashTags.get(i), i);
 			addToHashTagCountersTable(ID,postHashTags.get(i),i);
 		}
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		return "postCreated";
 
 	}
 
+<<<<<<< HEAD
 /**
  * this for a friend page post	
  * @param placeEmail
@@ -396,6 +457,8 @@ public class PostEntity
 		return likes;
 	}
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	public String getPostContent() {
 		return postContent;
 	}
@@ -435,6 +498,7 @@ public class PostEntity
 	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
 	}
+<<<<<<< HEAD
 	
 	public String getWhere() {
 		return Where;
@@ -444,6 +508,8 @@ public class PostEntity
 		this.Where = where;
 	}
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 	public String getPostTimestamp() {
 		return postTimestamp;
@@ -476,6 +542,7 @@ public class PostEntity
 	public void setFeeling(String feeling) {
 		this.feeling = feeling;
 	}
+<<<<<<< HEAD
 	
 	   public static Vector<PostEntity> viewPagePosts(String name) {
 		    // TODO Auto-generated method stub
@@ -574,3 +641,6 @@ public class PostEntity
 		return object;
 	}
 }
+=======
+}
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463

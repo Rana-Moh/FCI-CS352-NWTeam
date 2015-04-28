@@ -24,9 +24,12 @@ import com.google.appengine.api.datastore.Transaction;
 
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.Timestamp;
@@ -65,6 +68,7 @@ public class NotificationEntity
 				type.add(entity.getProperty("type").toString());
 				parameters.add(entity.getProperty("parameters").toString());
 				
+<<<<<<< HEAD
 				
 			}
 		}
@@ -167,3 +171,14 @@ public class NotificationEntity
 	
 
 }
+=======
+			}
+		}
+
+		return null;
+	}
+
+	
+
+}
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463

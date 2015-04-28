@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
 <title>reply</title>
+<<<<<<< HEAD
 <style>
 
 .button
@@ -53,5 +54,16 @@ h1{
 </form>
 	</section><!-- content -->
 </div><!-- container -->
+=======
+</head>
+<body>
+
+<form action="/social/replymsg" method="get">
+
+	write conversation name u want to reply to : <input type="text" name="cname" ><br/>
+	
+	<input type="submit" value="see if conversation exists">
+</form>
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 </body>
 </html>

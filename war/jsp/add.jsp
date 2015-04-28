@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
 <title>add member</title>
+<<<<<<< HEAD
 <style>
 
 .button
@@ -53,5 +54,15 @@ h1{
 <input type="submit" value="send" class="button"> </form> 
 	</section><!-- content -->
 </div><!-- container -->
+=======
+</head>
+<body>
+
+<form action="/social/addMember" method="get">
+    conversation Name : <input type="text"  name="cname" /> <br>
+    <br><br><br> 
+    member Email : <input type="text" name="email" /> <br> 
+<input type="submit" value="send"> </form> 
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 </body>
 </html>

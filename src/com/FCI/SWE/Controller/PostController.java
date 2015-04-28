@@ -29,6 +29,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+<<<<<<< HEAD
 import com.FCI.SWE.Models.PageEntity;
 import com.FCI.SWE.Models.PostEntity;
 import com.FCI.SWE.Models.User;
@@ -66,6 +67,24 @@ public class PostController
 		return Response.ok(new Viewable("/jsp/AllPosts")).build();
 
 	}
+=======
+import com.FCI.SWE.Models.User;
+import com.FCI.SWE.Models.UserEntity;
+import com.google.apphosting.utils.config.ClientDeployYamlMaker.Request;
+
+/**
+ * @author Esraa Salem
+ * @version 1.4
+ * @since 15/4/2015
+ * 
+ *        This class will be resposible for the posts creation and functions
+ *        related to them
+ * **/
+
+@Path("/")
+@Produces("text/html")
+public class PostController {
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 	@GET
 	@Path("/createPost")
@@ -74,6 +93,7 @@ public class PostController
 
 	}
 
+<<<<<<< HEAD
 
 	@GET
 	@Path("/createPost1")
@@ -85,12 +105,15 @@ public class PostController
 		
 	}
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	@GET
 	@Path("/postPlace")
 	public Response postPlace() {
 		return Response.ok(new Viewable("/jsp/postPlace")).build();
 
 	}
+<<<<<<< HEAD
 	
 
 /**
@@ -164,15 +187,35 @@ public class PostController
  * @param postPlace
  * @param Feeling
  */
+=======
+
+	@GET
+	@Path("/TimeLine")
+	public Response TimeLine() {
+		return Response.ok(new Viewable("/jsp/TimeLine")).build();
+
+	}
+
+	@GET
+	@Path("/FriendList")
+	public Response FriendList() {
+		return Response.ok(new Viewable("/jsp/FriendList")).build();
+
+	}
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 	@POST
 	@Path("/AllPosts")
 	@Produces("text/html")
+<<<<<<< HEAD
 	// @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	public Response response(@FormParam("postContent") String postContent,
 			@FormParam("privacy") String privacy,
 			@FormParam("postPlace") String postPlace,
 			@FormParam("Feelings") String Feeling) {
+<<<<<<< HEAD
 		String writerEmail = User.getCurrentActiveUser().getEmail();
 		String serviceUrl = "http://localhost:8888/rest/CreatePost";
 		String urlParameters = "postContent=" + postContent + "&writerEmail="
@@ -187,12 +230,27 @@ public class PostController
 			return Response.ok(new Viewable("/jsp/customFriends", "")).build();
 		}
 
+=======
+			
+		
+		
+		System.out.println("postPlace hhhhhhhhhhhhhhhh = "+ Feeling);
+		String writerEmail = User.getCurrentActiveUser().getEmail();
+		String serviceUrl = "http://localhost:8888/rest/CreatePost";
+		String urlParameters = "postContent=" + postContent + "&writerEmail="
+				+ writerEmail + "&privacy=" + privacy+"&postPlace=" + postPlace+"&Feeling=" + Feeling;
+		String result = Connection.connect(serviceUrl, urlParameters, "POST",
+				"application/x-www-form-urlencoded;charset=UTF-8");
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		if (result.equals("postCreated"))
 			return Response.ok(new Viewable("/jsp/AllPosts", "")).build();
 		return Response.ok(new Viewable("/jsp/createPost", "")).build();
 
 	}
 
+<<<<<<< HEAD
 	
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 }

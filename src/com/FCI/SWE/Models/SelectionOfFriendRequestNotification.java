@@ -12,7 +12,10 @@ import java.util.Vector;
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 import org.json.simple.JSONObject;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -29,6 +32,7 @@ import org.json.simple.parser.ParseException;
 
 public class SelectionOfFriendRequestNotification implements INotificationTypes
 {
+<<<<<<< HEAD
 	public static  String stringToList(String e)
 	{
 		//e=e.substring(1,e.length()-1);
@@ -43,22 +47,58 @@ public class SelectionOfFriendRequestNotification implements INotificationTypes
 		}
 		
 		return null;//Arrays.asList(e.split(","));
+=======
+	public static List<String> stringToList(String e)
+	{
+		e=e.substring(1,e.length()-1);
+		return Arrays.asList(e.split(","));
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 		
 	}
 	
 
+<<<<<<< HEAD
 
+=======
+	@Override
+	public INotificationTypes getNotification(String S) 
+	{
+
+		INotificationTypes temp=null;
+		
+		try
+		{
+			temp=(INotificationTypes)Class.forName("com.FCI.SWE.Models.SelectionOfFriendRequestNotification").newInstance();
+			
+		}
+		catch(Exception e)
+		{
+				
+		}
+		
+		return temp;
+	
+	}
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 	@Override
 	public String viewNotication(String S) 
 	{
 		
+<<<<<<< HEAD
 		System.out.println("here2"+ S);
 		JSONObject object = new JSONObject();
 		String resKey= stringToList(S);
 		System.out.println(resKey);		
 		object.put("response",resKey);
 		return object.toJSONString();
+=======
+		
+		
+
+		JSONObject object = new JSONObject();
+		return object.put("response",stringToList(S).get(3)).toString();
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 	}
 

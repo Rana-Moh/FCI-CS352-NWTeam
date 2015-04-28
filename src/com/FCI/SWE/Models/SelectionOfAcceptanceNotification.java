@@ -22,6 +22,7 @@ import org.json.simple.parser.ParseException;
 
 public class SelectionOfAcceptanceNotification implements INotificationTypes {
 
+<<<<<<< HEAD
 
 	public static  String stringToList(String e)
 	{
@@ -51,6 +52,40 @@ public class SelectionOfAcceptanceNotification implements INotificationTypes {
 		object.put("response",resKey);
 		return object.toJSONString();
 
+=======
+	
+	public static List<String> stringToList(String e)
+	{
+		e=e.substring(1,e.length()-1);
+		return Arrays.asList(e.split(", "));
+		
+	}
+	
+	@Override
+	public INotificationTypes getNotification(String S) {
+
+		INotificationTypes temp=null;
+		
+		try
+		{
+			temp=(INotificationTypes)Class.forName("com.FCI.SWE.Models.SelectionOfAcceptanceNotification").newInstance();
+			
+		}
+		catch(Exception e)
+		{
+				
+		}
+		
+		return temp;
+	
+	}
+
+	@Override
+	public String viewNotication(String S) {
+		// TODO Auto-generated method stub
+		JSONObject object = new JSONObject();
+		return object.put("response",stringToList(S).get(2)).toString();
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	}
 
 	

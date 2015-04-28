@@ -17,9 +17,15 @@
 			<br> <input type="submit" value="Post">
 				<input type="submit" value="Like"> 
 				<input type="submit"	value="Share">
+<<<<<<< HEAD
 			    <INPUT TYPE="radio" NAME="privacy" VALUE="public" > public
 			    <INPUT TYPE="radio" NAME="privacy" VALUE="private" >private
 			    <INPUT TYPE="radio" NAME="privacy" VALUE="custom" >custom
+=======
+			    <INPUT TYPE="radio" NAME="privcy" VALUE="public" > public
+			    <INPUT TYPE="radio" NAME="privcy" VALUE="private" >private
+			    <INPUT TYPE="radio" NAME="privcy" VALUE="custom" >custom
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 			     <input type="hidden" id="postPlace" name="postPlace" value="TimeLine">
 			     <select name="Feelings">
 			     <option value="empty">Feeling</option>

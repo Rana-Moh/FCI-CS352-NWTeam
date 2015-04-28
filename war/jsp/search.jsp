@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
 <title>Search</title>
+<<<<<<< HEAD
 <style>
 .center {
     margin-left: auto;
@@ -49,5 +50,14 @@ body
   </div><!-- button -->
    </section><!-- content -->
 </div><!-- container -->
+=======
+</head>
+<body>
+<form action="/social/doSearch" method="post">
+  Username : <input type="text" name="uname" /> <br>
+  <input type="submit" value="Search">
+  
+  </form>
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 </body>
 </html>

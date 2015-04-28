@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+<<<<<<< HEAD
 <title>Social Media</title>
 <style>
 
@@ -48,6 +49,13 @@ h1{
 <h1 style="color:white" >Social Media</h1>
 <a href="/social/signup/" style="color:black;font-size:40px;">Signup</a> <br><br><br>
 <a href="/social/login/" style="color:black;font-size:40px;">Login</a> <br>
+=======
+<title>Insert title here</title>
+</head>
+<body>
+<a href="/social/signup/">Sign up</a> <br>
+<a href="/social/login/">Login</a> <br>
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 
 </body>

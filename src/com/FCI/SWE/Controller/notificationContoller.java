@@ -29,8 +29,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+<<<<<<< HEAD
 import com.FCI.SWE.Models.MsgEntity;
 import com.FCI.SWE.Models.PostEntity;
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 import com.FCI.SWE.Models.User;
 //import com.FCI.SWE.Models.User;
 import com.FCI.SWE.Models.UserEntity;
@@ -52,6 +55,7 @@ import com.FCI.SWE.Models.UserEntity;
 
 public class notificationContoller 
 {
+<<<<<<< HEAD
 	
 	public static String accepted;
 	public static String who;
@@ -63,6 +67,8 @@ public class notificationContoller
 	public static String privacy;
 	public static String feelings;
 	public static String place;
+=======
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 	/*@GET
 	@Path("/viewN")
 	public Response viewN()
@@ -89,6 +95,7 @@ public class notificationContoller
 	@GET
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Path("/parseNotification")
+<<<<<<< HEAD
 	public Response notification(@QueryParam("type") String type, @QueryParam("parameters")String parameters)
 	{
 		System.out.println(type + "  "+ parameters);
@@ -96,6 +103,14 @@ public class notificationContoller
 		String urlParameters = "type=" + type+"&parameters="+parameters;
 		
 		String retJson = Connection.connect(serviceUrl, urlParameters, "POST",
+=======
+	public String notification(@QueryParam("type") String type, @QueryParam("paramters")String paramters)
+	{
+		String serviceUrl = "http://localhost:8888/rest/parseNotification/";
+		String urlParameters = "type=" + type+"&paramters="+paramters;
+		
+		String retJson = Connection.connect(serviceUrl, urlParameters, "GET",
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 				"application/x-www-form-urlencoded;charset=UTF-8");
 		
 		try {
@@ -104,6 +119,7 @@ public class notificationContoller
 			Object obj = parser.parse(retJson);
 			JSONObject object = (JSONObject) obj;
 				
+<<<<<<< HEAD
 			if(type.equals("FriendRequestNotification"))
 			{
 				String SUrl="http://localhost:8888/rest/accept";
@@ -170,6 +186,9 @@ public class notificationContoller
 				return Response.ok(new Viewable("/jsp/accepted1")).build();
 			}
 			
+=======
+			return (String) object.get("response");
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -179,4 +198,8 @@ public class notificationContoller
 
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 5f1d5ad63d94a61f202cd273ef05201d2fd41463
